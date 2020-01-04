@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="style.css" />
+    <title>Vue cdn</title>
+</head>
+
+<body>
+    <div id="vue-app">
+        <!-- v-if 条件成立存在标签 -->
+        <button @click="error = !error">error</button>
+        <button @click="success = !success">success</button>
+        <p v-if="error">error is true</p>
+        <p v-else-if="success">success is true</p>
+        <p v-else>error and success is false</p>
+
+        <!-- v-show 条件成立 显示标签 标签一直存在只是是否显示取决于条件 -->
+        <button @click="show = !show">v-show</button>
+        <p v-show="show">v-show标签</p>
+    </div>
+</body>
+<script src="app.js"></script>
+
+</html>
