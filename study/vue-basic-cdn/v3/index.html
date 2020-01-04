@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="style.css" />
+    <title>Vue cdn</title>
+</head>
+
+<body>
+    <div id="vue-app">
+        <!-- 数据双向绑定 input select textarea -->
+        <label>姓名</label>
+        <input type="text" v-model="name" /> <!-- input输入的内容会赋值给name属性 -->
+        <label>年龄</label>
+        <input type="text" v-model.lazy="age" /> <!-- .lazy懒加载事件修饰符 当鼠标离开时才会进行赋值 不会一直监听 提高效率 -->
+        <span>{{ name }} {{ age }}</span>
+
+        <!-- ref一般用于获取元素对象 可以是input 也可以是div等等 可以实现双向绑定-->
+        <label>R1</label>
+        <input type="text" ref="ref1" @keyup="getR1()" />
+        <label>R2</label>
+        <input type="text" ref="ref2" @keyup="getR2()" />
+        <span>{{ r1 }} {{ r2 }}</span>
+    </div>
+</body>
+<script src="app.js"></script>
+
+</html>
