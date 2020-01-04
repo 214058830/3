@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="style.css" />
+    <title>Vue cdn</title>
+</head>
+
+<body>
+    <div id="vue-app">
+        <!-- 事件 -->
+        <button v-on:click="age++">add a year</button> <!-- 两种写法都可以 -->
+        <button @click="age--">suntract a year</button>
+        <button @click="add()">add a year</button> <!-- 函数调用 -->
+        <button @dblclick="age+=10">add 10 year</button> <!-- 双击 -->
+        <p>年龄：{{ age }}</p>
+
+        <!--  鼠标事件 -->
+        <div id="canvas" v-on:mousemove="updateXY">{{x}} , {{y}}</div>
+        <p><a @click.prevent="handleClick()" href="http://www.baidu.com">baidu</a></p>
+        <!-- .prevent的作用为屏蔽默认的发生事件 即跳转baidu页面 -->
+
+        <!-- 键盘事件 -->
+        <label>姓名</label>
+        <input type="text" v-on:keyup="logNmae" /> <!-- 键盘抬起的时候触发调用logName函数 -->
+        <label>年龄</label>
+        <input type="text" v-on:keyup.enter="logAge" /> <!-- 只有enter键才可以触发 .alt.enter 就是两个一起按才可以触发 -->
+    </div>
+</body>
+<script src="app.js"></script>
+
+</html>
