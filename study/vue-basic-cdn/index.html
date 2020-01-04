@@ -11,8 +11,21 @@
 
 <body>
     <div id="vue-app">
-        <h1>hello, {{ name }}</h1>
-        <p>hello, {{ qq }}</p>
+        <h1>hello {{ name }}</h1>
+        <p>hello {{ qq }}</p>
+        <p>{{ greet('123') }}</p>
+
+        <!-- 属性绑定 会去寻找 vue-app中的属性值进行代替 -->
+        <p>
+            <!-- <a href="www.baidu.com">baidu</a> -->
+            <a v-bind:href="website">baidu</a>
+        </p>
+
+        <!-- <p> {{ websiteTag }}</p> -->
+        <p v-html="websiteTag"></p>
+
+        <!-- <p><input type="text" value="123456" /></p> -->
+        <p><input type="text" v-bind:value="qq" /></p>
     </div>
 </body>
 <script src="app.js"></script>
