@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="style.css" />
+    <title>Vue cdn</title>
+</head>
+
+<body>
+    <div id="vue-app">
+        <!-- 动态绑定样式 两种方式 -->
+        <!-- 属性绑定方式 -->
+        <div @click="color1 = !color1" v-bind:class="{changeColor:color1}">
+            <!-- 每点击一次颜色变化一次 -->
+            <span>hello</span>
+        </div>
+        <!-- 计算绑定方式 -->
+        <div @click="color2 = !color2, length = !length" v-bind:class="compClass">
+            <span>hello</span>
+        </div>
+    </div>
+</body>
+<script src="app.js"></script>
+
+</html>
