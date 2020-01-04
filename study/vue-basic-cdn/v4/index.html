@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="style.css" />
+    <title>Vue cdn</title>
+</head>
+
+<body>
+    <div id="vue-app">
+        <!-- 当属性值发生变化时 其中的method都会执行一次 消耗性能 -->
+        <button @click="a++">Add to A</button>
+        <button @click="b++">Add to B</button>
+        <p>A {{a}}</p>
+        <p>B {{b}}</p>
+        <p>Age + a = {{ funcaddToA() }}</p>
+        <p>Age + b = {{ funcaddToB() }}</p>
+
+        <!-- computed计算属性 来代替方法 -->
+        <p>Age + a = {{ addToA }}</p>
+        <p>Age + b = {{ addToB }}</p>
+    </div>
+</body>
+<script src="app.js"></script>
+
+</html>
