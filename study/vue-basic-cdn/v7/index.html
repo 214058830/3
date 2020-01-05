@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="style.css" />
+    <title>Vue cdn</title>
+</head>
+
+<body>
+    <div id="vue-app">
+        <ul>
+            <li v-for="v in arr">{{v}}</li>
+            <li v-for="v,k in arr">{{k}} {{v}}</li>
+            <li v-for="user, index in users">{{index}} {{user.age}}</li>
+        </ul>
+        <!-- 会产生多个标签 -->
+        <div v-for="user, index in users">
+            <h3>{{index}}, {{user}}</h3>
+        </div>
+        <!-- 不会产生多个标签 -->
+        <template v-for="user, index in users">
+            <h3>{{index}}, {{user}}</h3>
+        </template>
+        <!-- 遍历对象 -->
+        <template v-for="user, index in users">
+            <div v-for="val, key in user">
+                <p>{{key}} {{val}}</p>
+            </div>
+        </template>
+    </div>
+
+</body>
+<script src="app.js"></script>
+
+</html>
