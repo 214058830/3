@@ -19,4 +19,13 @@ export default{
 }
 </script>
 ```
-## v3 
+## v3 如何独立运行一个vue文件
+```
+项目根目录底下文件 Hello.vue
+sudo npm -install ******
+run serve Hello.vue
+```
+## v4
+```
+vue.config.js配置
+```
