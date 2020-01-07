@@ -1,6 +1,6 @@
-# v1 添加插件库 vue add ***
+## v1 添加插件库 vue add ***
 
-# v2 环境变量
+## v2 环境变量
 ```
 <p>dev.api.com</p>
 -> 
@@ -19,4 +19,4 @@ export default{
 }
 </script>
 ```
-# v3 
+## v3 
