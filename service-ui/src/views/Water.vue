@@ -1,32 +1,47 @@
 <template>
-  <div>
-    <Menu :theme="theme3">
-      <MenuGroup title="内容管理">
-        <MenuItem name="1">
-          <Icon type="md-document" />文章管理
-        </MenuItem>
-        <MenuItem name="2">
-          <Icon type="md-chatbubbles" />评论管理
-        </MenuItem>
-      </MenuGroup>
-      <MenuGroup title="统计分析">
-        <MenuItem name="3">
-          <Icon type="md-heart" />用户留存
-        </MenuItem>
-        <MenuItem name="4">
-          <Icon type="md-leaf" />流失用户
-        </MenuItem>
-      </MenuGroup>
-    </Menu>
-  </div>
+  <Row>
+    <Col span="6">
+      <Menu v-bind:active-name="select">
+        <Menu-group title="信息查询">
+          <Menu-item name="s1-1" @click.native="select = 's1-1'">
+            <Icon type="document-text"></Icon>水利信息查询
+          </Menu-item>
+        </Menu-group>
+        <Menu-group title="信息更改">
+          <Menu-item name="s2-1" @click.native="select = 's2-1'">
+            <Icon type="heart"></Icon>录入信息
+          </Menu-item>
+          <Menu-item name="s2-2" @click.native="select = 's2-2'">
+            <Icon type="heart-broken"></Icon>信息修改
+          </Menu-item>
+        </Menu-group>
+      </Menu>
+    </Col>
+    <Col span="18">
+      <div v-show="select == 's1-1'">
+        <p>s1-1</p>
+      </div>
+      <div v-show="select == 's2-1'">
+        <p>s2-1</p>
+      </div>
+      <div v-show="select == 's2-2'">
+        <p>s2-2</p>
+      </div>
+    </Col>
+  </Row>
 </template>
 
 <script>
 export default {
   data() {
     return {
-      theme3: "light"
+      select: "s1-1"
     };
+  },
+  methods: {
+    info() {
+      this.$Message.info("这是一条普通的提醒");
+    }
   }
 };
 </script>

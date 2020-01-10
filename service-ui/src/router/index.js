@@ -3,6 +3,8 @@ import VueRouter from 'vue-router'
 import Water from '../views/Water.vue'
 import User from '../views/User.vue'
 import Platform from '../views/Platform.vue'
+import Login from '../views/Login.vue'
+import Register from '../views/Register.vue'
 
 Vue.use(VueRouter)
 
@@ -21,6 +23,16 @@ const routes = [
     path: '/platform',
     name: 'platform',
     component: Platform
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: Login
+  },
+  {
+    path: '/register',
+    name: 'register',
+    component: Register
   }
 ]
 

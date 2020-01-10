@@ -5,9 +5,6 @@
         <Menu-item router-link to="/">
           <Icon type="md-home" />SUST水利信息系统
         </Menu-item>
-        <!-- <Menu-item router-link to="/">
-          <Icon type="ios-paper" />水利信息管理
-        </Menu-item>-->
         <Menu-item router-link to="/user">
           <Icon type="ios-people" />用户管理
         </Menu-item>
@@ -16,12 +13,11 @@
         </Menu-item>
       </div>
       <div class="layout-registered">
-        <Menu-item>注册</Menu-item>
-        <Menu-item>登录</Menu-item>
+        <Menu-item router-link to="/register">注册</Menu-item>
+        <Menu-item router-link to="/login">登录</Menu-item>
       </div>
     </Menu>
     <div class="layout-content">
-      <!-- <router-link to="/about">About</router-link> -->
       <router-view />
     </div>
     <div class="layout-copy">2020 &copy; GongBin</div>
