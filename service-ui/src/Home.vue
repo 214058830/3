@@ -1,20 +1,20 @@
 <template>
   <div class="layout">
-    <Menu mode="horizontal" :theme="theme">
+    <Menu mode="horizontal" :theme="theme" active-name="s1">
       <div class="layout-menu">
-        <Menu-item router-link to="/">
+        <Menu-item name="s1" router-link to="/">
           <Icon type="md-home" />SUST水利信息系统
         </Menu-item>
-        <Menu-item router-link to="/user">
+        <Menu-item name="s2" router-link to="/user">
           <Icon type="ios-people" />用户管理
         </Menu-item>
-        <Menu-item router-link to="/platform">
+        <Menu-item name="s3" router-link to="/platform">
           <Icon type="ios-cafe" />论坛
         </Menu-item>
       </div>
       <div class="layout-registered">
-        <Menu-item router-link to="/register">注册</Menu-item>
-        <Menu-item router-link to="/login">登录</Menu-item>
+        <Menu-item name="s4" router-link to="/register">注册</Menu-item>
+        <Menu-item name="s5" router-link to="/login">登录</Menu-item>
       </div>
     </Menu>
     <div class="layout-content">
