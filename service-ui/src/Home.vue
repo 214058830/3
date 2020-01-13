@@ -45,7 +45,7 @@ export default {
 }
 .layout-registered {
   float: right;
-  margin-right: 50px;
+  margin-right: 100px;
 }
 .layout-copy {
   text-align: center;
