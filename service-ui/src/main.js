@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import App from './Home.vue'
+import App from './App.vue'
 import router from './router'
 import store from './store'
 import iView from 'iview'; // 导入组件库
