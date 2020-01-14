@@ -25,12 +25,13 @@
             <FormItem label="确认密码" prop="password_sure">
               <Input
                 v-model="formValidate.password_sure"
+                type="password"
                 style="width: 300px"
                 placeholder="请再次确认密码"
               ></Input>
             </FormItem>
             <FormItem>
-              <Button type="primary" @click="handleSubmit('formValidate')">Submit</Button>
+              <Button type="primary" @click="handleSubmit()">Submit</Button>
               <Button @click="handleReset('formValidate')" style="margin-left: 8px">Reset</Button>
             </FormItem>
           </Form>
@@ -107,14 +108,19 @@ export default {
     };
   },
   methods: {
-    handleSubmit(name) {
-      this.$refs[name].validate(valid => {
-        if (valid) {
-          this.$Message.success("Success!");
-        } else {
-          this.$Message.error("Fail!");
-        }
-      });
+    handleSubmit() {
+      // console.log(this.formValidate);
+      // this.axios
+      //   .post("http://jsonplaceholder.typicode.com/todos", this.formValidate)
+      //   .then(res => {
+      //     console.log(res.data); // res 返回的是传出的参数
+      //   });
+      this.axios
+        .get("http://localhost:8081/v1/user") //请求接口
+        .then(response => {
+          console.log(response.data);
+          console.log(response.status + " " + response.statusText);
+        });
     },
     handleReset(name) {
       this.$refs[name].resetFields();
