@@ -39,8 +39,8 @@
                   ></Input>
                 </FormItem>
                 <FormItem>
-                  <Button type="primary" @click="handleSubmit()">Submit</Button>
-                  <Button @click="handleReset('formValidate')" style="margin-left: 8px">Reset</Button>
+                  <Button type="primary" @click="handleSubmit()" style="margin-left: 50px">注册</Button>
+                  <Button @click="handleReset('formValidate')" style="margin-left: 10px">清空</Button>
                 </FormItem>
               </Form>
             </div>
