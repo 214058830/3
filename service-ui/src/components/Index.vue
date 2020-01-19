@@ -1,12 +1,20 @@
 <template>
   <div>
-    <h1>This is an platform page</h1>
+    <Header />
+    <router-view></router-view>
+    <Footer />
   </div>
 </template>
 
 <script>
+import Header from "./Header.vue";
+import Footer from "./Footer.vue";
+
 export default {
-  components: {},
+  components: {
+    Header,
+    Footer
+  },
   data() {
     return {};
   },

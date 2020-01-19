@@ -2,19 +2,19 @@
   <div class="layout">
     <Menu mode="horizontal" :theme="theme" :active-name="activemenu">
       <div class="layout-menu">
-        <Menu-item name="/water" to="/water">
+        <Menu-item name="water" to="/">
           <Icon type="md-home" />SUST水利信息系统
         </Menu-item>
-        <Menu-item name="/user" to="/user">
+        <Menu-item name="user" to="/user">
           <Icon type="ios-people" />用户管理
         </Menu-item>
-        <Menu-item name="/platform" to="/platform">
+        <Menu-item name="platform" to="/platform">
           <Icon type="ios-cafe" />论坛
         </Menu-item>
       </div>
       <div class="layout-registered">
-        <Menu-item name="/register" to="register">注册</Menu-item>
-        <Menu-item name="/login" to="login">登录</Menu-item>
+        <Menu-item name="register" to="/register">注册</Menu-item>
+        <Menu-item name="login" to="/login">登录</Menu-item>
       </div>
     </Menu>
   </div>
@@ -24,7 +24,7 @@
 export default {
   data() {
     return {
-      activemenu: "/water", // 默认激活子菜单
+      activemenu: "water", // 默认激活子菜单
       theme: "primary" // 导航栏主题色彩
     };
   },
