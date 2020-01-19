@@ -83,19 +83,33 @@ export default {
   },
   methods: {
     handleSubmit() {
+      const msg = this.$Message.loading({
+        content: "Loading...",
+        duration: 0
+      });
+
       this.axios
         .post(
-          process.env.VUE_APP_BASE_URL + process.env.VUE_APP_VERSION + "/login",
+          process.env.VUE_APP_BASE_URL +
+            process.env.VUE_APP_VERSION +
+            "/user/login",
           this.formValidate
         )
         .then(
           res => {
-            console.log(res.data); // res 返回的是传出的参数
-            console.log(res.status + " " + res.statusText);
+            setTimeout(msg, 0);
+            if (res.data.Code == 2000) {
+              this.$Message.success("登录成功");
+            } else {
+              this.$Message.warning("登录失败，用户名或密码错误。");
+            }
+            // console.log(res.data.Code);
+            // console.log(res.data); // res 返回的是传出的参数
+            // console.log(res.status + " " + res.statusText);
           },
           res => {
-            console.log(res);
-            console.log("error");
+            setTimeout(msg, 0);
+            this.$Message.warning("登录失败，请刷新或重试。");
           }
         );
     }
