@@ -11,10 +11,8 @@ export default {
   methods: {},
   mounted() {
     // 测试函数
-    console.log(process.env.VUE_APP_BASE_URL);
-    console.log(process.env.VUE_APP_VERSION);
-    console.log(this.GLOBAL.user_mail);
-    console.log(this.GLOBAL.hasEnter);
+    console.log("test: " + process.env.VUE_APP_BASE_URL);
+    console.log("test: " + process.env.VUE_APP_VERSION);
   }
 };
 </script>

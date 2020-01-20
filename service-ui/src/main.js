@@ -6,13 +6,13 @@ import iView from 'iview'; // 导入组件库
 import 'iview/dist/styles/iview.css'; // 导入样式
 import axios from 'axios' // 导入axios
 import Qs from 'qs'
-import global_ from './components/Global'//引用登录用户状态文件
+// import global_ from './components/Global'//引用登录用户状态文件
 
 Vue.config.productionTip = false
 Vue.use(iView);
 Vue.prototype.axios = axios;
 Vue.prototype.qs = Qs;
-Vue.prototype.GLOBAL = global_
+// Vue.prototype.GLOBAL = global_
 
 new Vue({
   router,

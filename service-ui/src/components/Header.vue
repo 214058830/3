@@ -12,6 +12,9 @@
           <Icon type="ios-cafe" />论坛
         </Menu-item>
       </div>
+      <!-- <div class="layout-registered" v-if="this.has_enter">
+        <Menu-item name="login" to="/login">{{ this.GLOBAL.mail }}</Menu-item>
+      </div>-->
       <div class="layout-registered">
         <Menu-item name="register" to="/register">注册</Menu-item>
         <Menu-item name="login" to="/login">登录</Menu-item>
