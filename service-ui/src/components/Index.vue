@@ -1,7 +1,7 @@
 <template>
   <div>
-    <Header />
-    <router-view></router-view>
+    <Header :flag="flag" />
+    <router-view @changeFlag="updataFlag"></router-view>
     <Footer />
   </div>
 </template>
@@ -16,11 +16,14 @@ export default {
     Footer
   },
   data() {
-    return {};
+    return {
+      flag: sessionStorage.flag // 标记用户是否登录
+    };
   },
   methods: {
-    info() {
-      this.$Message.info("这是一条普通的提醒");
+    updataFlag(flag) {
+      sessionStorage.flag = flag;
+      this.flag = sessionStorage.flag;
     }
   }
 };

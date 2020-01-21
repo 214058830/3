@@ -6,13 +6,16 @@ import iView from 'iview'; // 导入组件库
 import 'iview/dist/styles/iview.css'; // 导入样式
 import axios from 'axios' // 导入axios
 import Qs from 'qs'
+import VueCookies from 'vue-cookies'
 // import global_ from './components/Global'//引用登录用户状态文件
 
 Vue.config.productionTip = false
 Vue.use(iView);
+Vue.use(VueCookies)
 Vue.prototype.axios = axios;
 Vue.prototype.qs = Qs;
 // Vue.prototype.GLOBAL = global_
+axios.defaults.withCredentials = true // 允许axios跨域请求带cookie
 
 new Vue({
   router,
