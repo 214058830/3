@@ -3,29 +3,38 @@
     <Menu mode="horizontal" :theme="theme" :active-name="activemenu">
       <div class="layout-menu">
         <Menu-item name="water" to="/">
-          <Icon type="md-home" />SUST水利信息系统
+          <Icon size="20" type="md-home" />SUST水利信息系统
         </Menu-item>
         <Menu-item name="user" to="/user">
-          <Icon type="ios-people" />用户管理
+          <Icon size="20" type="ios-people" />用户管理
         </Menu-item>
         <Menu-item name="platform" to="/platform">
-          <Icon type="ios-cafe" />论坛
+          <Icon size="20" type="ios-cafe" />论坛
         </Menu-item>
       </div>
       <div class="layout-registered" v-if="this.flag === 'true'">
-        <Dropdown trigger="custom" :visible="visible" style="margin-left: 20px">
-          <a href="javascript:void(0)" @click="handleOpen">
-            custom 触发
-            <Icon type="arrow-down-b"></Icon>
-          </a>
-          <Dropdown-menu slot="list">
-            <p>常用于各种自定义下拉内容的场景。</p>
-            <div style="text-align: right;margin:10px;">
-              <i-button type="primary" @click="handleClose">关闭</i-button>
+        <Dropdown
+          trigger="custom"
+          :visible="visible"
+          style="margin-right: 20px"
+          placement="bottom-end"
+        >
+          <div class="layout-center" @click="handleOpenAndClose">
+            你好， {{ this.mail }}
+            <!-- <Icon type="arrow-down-b"></Icon> -->
+            <Icon type="ios-arrow-up" v-if="this.visible" />
+            <Icon type="ios-arrow-down" v-else />
+          </div>
+          <Dropdown-menu slot="list" style="width: 240px; margin-left: 30px">
+            <div style="height: 50px;">
+              <Icon size="20" type="ios-contact-outline" />个人中心
+            </div>
+            <div style="height: 60px; font-size: 16px" @click="logout">
+              退出
+              <Icon size="20" type="ios-power" style="margin-left: 150px" />
             </div>
           </Dropdown-menu>
         </Dropdown>
-        <!-- <Menu-item name="login" to="/login">账号</Menu-item> -->
       </div>
       <div class="layout-registered" v-else>
         <Menu-item name="register" to="/register">注册</Menu-item>
@@ -38,21 +47,23 @@
 <script>
 export default {
   props: {
-    flag: String
+    flag: String,
+    mail: String
   },
   data() {
     return {
-      visible: false,
+      visible: false, // 子菜单开关
       activemenu: "water", // 默认激活子菜单
       theme: "primary" // 导航栏主题色彩
     };
   },
   methods: {
-    handleOpen() {
-      this.visible = true;
+    // 控制个人中心菜单
+    handleOpenAndClose() {
+      this.visible = !this.visible;
     },
-    handleClose() {
-      this.visible = false;
+    logout() {
+      this.$emit("logout", "false");
     }
   },
   watch: {},
@@ -73,5 +84,9 @@ export default {
 .layout-registered {
   float: right;
   margin-right: 100px;
+}
+.layout-center {
+  font-size: 16px;
+  color: white;
 }
 </style>

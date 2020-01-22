@@ -1,12 +1,16 @@
 <template>
-  <button @click="fun()">test</button>
+  <div>
+    <button @click="fun()">test</button>
+  </div>
 </template>
 
 <script>
 export default {
   components: {},
   data() {
-    return {};
+    return {
+      single: true
+    };
   },
   methods: {
     fun() {

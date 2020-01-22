@@ -17,7 +17,7 @@
                   placeholder="请输入密码"
                 ></Input>
               </FormItem>
-              <Checkbox :v-model="formValidate.single" size="large" style="margin-left: 80px">记住登录状态</Checkbox>
+              <Checkbox v-model="formValidate.single" size="large" style="margin-left: 80px">记住登录状态</Checkbox>
               <FormItem>
                 <Button type="primary" @click="login()" style="margin-left: 110px">登录</Button>
               </FormItem>
@@ -57,6 +57,7 @@ export default {
   components: {},
   data() {
     return {
+      single: true,
       formValidate: {
         // 登录邮箱密码
         mail: "",
@@ -103,7 +104,12 @@ export default {
             if (res.data.code == 2000) {
               this.$Message.success("登录成功");
               this.$emit("changeFlag", "true");
-              // this.$router.replace({ path: "/water" });
+              this.$emit(
+                "changeUserInfo",
+                this.formValidate.mail,
+                this.formValidate.password
+              );
+              this.$router.replace({ path: "/water" });
             } else {
               this.$Message.warning("登录失败，用户名或密码错误。");
             }
