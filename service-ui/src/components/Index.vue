@@ -3,6 +3,7 @@
     <Header :flag="flag" :mail="mail" @logout="logout" />
     <router-view @changeFlag="updataFlag" @changeUserInfo="updataUserInfo"></router-view>
     <Footer />
+    <BackTop></BackTop>
   </div>
 </template>
 

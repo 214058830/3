@@ -7,6 +7,7 @@ import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import Error_404 from '../views/Error_404.vue'
 import Index from '../components/Index.vue'
+import Home from '../views/Home.vue'
 
 Vue.use(VueRouter)
 
@@ -15,9 +16,14 @@ const routes = [
     path: '/',
     name: 'index',
     component: Index,
-    redirect: '/water',
+    redirect: '/home',
     meta: { title: '首页' },
     children: [
+      {
+        path: 'home',
+        name: 'home',
+        component: Home
+      },
       {
         path: 'water',
         name: 'water',

@@ -1,16 +1,17 @@
 <template>
   <div class="layout">
-    <Menu mode="horizontal" :theme="theme" :active-name="activemenu">
+    <Menu
+      mode="horizontal"
+      :theme="theme"
+      :active-name="activemenu"
+      style="height: 90px; 
+      line-height:90px"
+    >
       <div class="layout-menu">
-        <Menu-item name="water" to="/">
-          <Icon size="20" type="md-home" />SUST水利信息系统
-        </Menu-item>
-        <Menu-item name="user" to="/user">
-          <Icon size="20" type="ios-people" />用户管理
-        </Menu-item>
-        <Menu-item name="platform" to="/platform">
-          <Icon size="20" type="ios-cafe" />论坛
-        </Menu-item>
+        <Menu-item name="home" to="/" style="font-size: 20px">首页</Menu-item>
+        <Menu-item name="water" to="/water">水利信息系统</Menu-item>
+        <Menu-item name="user" to="/user">用户管理</Menu-item>
+        <Menu-item name="platform" to="/platform">论坛</Menu-item>
       </div>
       <div class="layout-registered" v-if="this.flag === 'true'">
         <Dropdown
