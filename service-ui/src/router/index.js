@@ -8,6 +8,9 @@ import Register from '../views/Register.vue'
 import Error_404 from '../views/Error_404.vue'
 import Index from '../components/Index.vue'
 import Home from '../views/Home.vue'
+import Home_about from '../components/Home_about.vue'
+import Home_index from '../components/Home_index.vue'
+import Center from '../views/Center.vue'
 
 Vue.use(VueRouter)
 
@@ -22,7 +25,20 @@ const routes = [
       {
         path: 'home',
         name: 'home',
-        component: Home
+        component: Home,
+        redirect: '/home/index',
+        children: [
+          {
+            path: 'index',
+            name: 'index',
+            component: Home_index
+          },
+          {
+            path: 'about',
+            name: 'about',
+            component: Home_about
+          }
+        ]
       },
       {
         path: 'water',
@@ -49,6 +65,11 @@ const routes = [
         name: 'register',
         component: Register
       },
+      {
+        path: '/center',
+        name: 'center',
+        component: Center
+      }
     ]
   },
   {

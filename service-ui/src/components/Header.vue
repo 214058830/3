@@ -27,7 +27,7 @@
             <Icon type="ios-arrow-down" v-else />
           </div>
           <Dropdown-menu slot="list" style="width: 240px; margin-left: 30px">
-            <div style="height: 50px;">
+            <div style="height: 50px;" @click="center">
               <Icon size="20" type="ios-contact-outline" />个人中心
             </div>
             <div style="height: 60px; font-size: 16px" @click="logout">
@@ -65,6 +65,10 @@ export default {
     },
     logout() {
       this.$emit("logout", "false");
+    },
+    center() {
+      this.handleOpenAndClose();
+      this.$router.push({ path: "/center" });
     }
   },
   watch: {},

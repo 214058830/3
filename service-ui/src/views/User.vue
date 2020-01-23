@@ -1,6 +1,35 @@
 <template>
-  <div>
-    <h1>This is an user page</h1>
+  <div class="layout-content">
+    <Row>
+      <Col span="6">
+        <Menu v-bind:active-name="select">
+          <Menu-group title="信息查询">
+            <Menu-item name="s1-1">
+              <Icon type="document-text"></Icon>水利信息查询
+            </Menu-item>
+          </Menu-group>
+          <Menu-group title="信息更改">
+            <Menu-item name="s2-1">
+              <Icon type="heart"></Icon>录入信息
+            </Menu-item>
+            <Menu-item name="s2-2">
+              <Icon type="heart-broken"></Icon>信息修改
+            </Menu-item>
+          </Menu-group>
+        </Menu>
+      </Col>
+      <Col span="18">
+        <div v-show="select == 's1-1'">
+          <p>s1-1</p>
+        </div>
+        <div v-show="select == 's2-1'">
+          <p>s2-1</p>
+        </div>
+        <div v-show="select == 's2-2'">
+          <p>s2-2</p>
+        </div>
+      </Col>
+    </Row>
   </div>
 </template>
 
@@ -8,12 +37,23 @@
 export default {
   components: {},
   data() {
-    return {};
+    return {
+      select: "s1-1"
+    };
   },
-  methods: {
-    info() {
-      this.$Message.info("这是一条普通的提醒");
-    }
-  }
+  methods: {},
+  mounted() {}
 };
 </script>
+
+<style scoped>
+.layout-content {
+  min-height: 200px;
+  margin: 15px;
+  overflow: hidden;
+  background: #fff;
+  border-radius: 4px;
+  margin-left: 100px;
+  margin-right: 100px;
+}
+</style>
