@@ -44,7 +44,7 @@
           <p slot="title">
             <Icon type="md-list-box" size="20" />还没有账号？
           </p>
-          <li>注册</li>
+          <li to="/register">注册</li>
           <li>忘记了密码？</li>
         </Card>
       </Col>
@@ -57,7 +57,6 @@ export default {
   components: {},
   data() {
     return {
-      single: true,
       formValidate: {
         // 登录邮箱密码
         mail: "",
@@ -68,7 +67,7 @@ export default {
         mail: [
           {
             required: true,
-            message: "Mailbox cannot be empty",
+            message: "The mail cannot be empty",
             trigger: "blur"
           },
           { type: "email", message: "Incorrect email format", trigger: "blur" }
@@ -104,12 +103,13 @@ export default {
             if (res.data.code == 2000) {
               this.$Message.success("登录成功");
               this.$emit("changeFlag", "true");
-              this.$emit(
-                "changeUserInfo",
-                this.formValidate.mail,
-                this.formValidate.password
-              );
-              this.$router.replace({ path: "/water" });
+              this.$emit("updataUserInfo", "id", res.data.data.id);
+              this.$emit("updataUserInfo", "mail", res.data.data.mail);
+              this.$emit("updataUserInfo", "username", res.data.data.user_name);
+              this.$emit("updataUserInfo", "password", res.data.data.pass_word);
+              this.$router.replace({ path: "/" });
+            } else if (res.data.code == 5000) {
+              this.$Message.success("服务器出错，请稍后重试。");
             } else {
               this.$Message.warning("登录失败，用户名或密码错误。");
             }

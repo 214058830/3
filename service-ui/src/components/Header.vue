@@ -10,7 +10,7 @@
       <div class="layout-menu">
         <Menu-item name="home" to="/" style="font-size: 20px">首页</Menu-item>
         <Menu-item name="water" to="/water">水利信息系统</Menu-item>
-        <Menu-item name="user" to="/user">用户管理</Menu-item>
+        <Menu-item name="user" to="/user" v-if="this.mail == 'admin@qq.com'">用户管理</Menu-item>
         <Menu-item name="platform" to="/platform">论坛</Menu-item>
       </div>
       <div class="layout-registered" v-if="this.flag === 'true'">
