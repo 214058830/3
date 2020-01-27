@@ -107,6 +107,7 @@ export default {
               this.$emit("updataUserInfo", "mail", res.data.data.mail);
               this.$emit("updataUserInfo", "username", res.data.data.user_name);
               this.$emit("updataUserInfo", "password", res.data.data.pass_word);
+              this.$emit("updataUserInfo", "logo", res.data.data.logo);
               this.$router.replace({ path: "/" });
             } else if (res.data.code == 5000) {
               this.$Message.success("服务器出错，请稍后重试。");

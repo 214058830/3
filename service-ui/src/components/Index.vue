@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Header :flag="flag" :mail="mail" @logout="logout" />
+    <Header :flag="flag" :logo="logo" :mail="mail" @logout="logout" />
     <router-view
       @changeFlag="updataFlag"
       @updataUserInfo="updataUserInfo"
@@ -25,6 +25,7 @@ export default {
   data() {
     return {
       flag: sessionStorage.flag, // 标记用户是否登录
+      logo: sessionStorage.logo, // 管理员标志
       id: sessionStorage.id,
       mail: sessionStorage.mail,
       username: sessionStorage.username,
@@ -48,6 +49,9 @@ export default {
       } else if (type == "username") {
         sessionStorage.username = data;
         this.username = sessionStorage.username;
+      } else if (type == "logo") {
+        sessionStorage.logo = data;
+        this.logo = sessionStorage.logo;
       } else {
         sessionStorage.password = data;
         this.password = sessionStorage.password;

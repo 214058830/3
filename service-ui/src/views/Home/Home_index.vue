@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/IMG_1505.png" />
+    <img alt="Vue logo" src="../../assets/IMG_1505.png" />
     <div class="hello">
       <br />
       <h1>Welcome to Water Information System</h1>

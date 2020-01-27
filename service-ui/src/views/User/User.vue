@@ -17,7 +17,7 @@
       </Col>
       <Col span="18">
         <div v-show="MenuItem == 's1-1'">
-          <p>s1-1</p>
+          <AddUser />
         </div>
         <div v-show="MenuItem == 's2-1'">
           <p>s2-1</p>
@@ -28,8 +28,12 @@
 </template>
 
 <script>
+import AddUser from "./AddUser";
+
 export default {
-  components: {},
+  components: {
+    AddUser
+  },
   data() {
     return {
       MenuItem: "s1-1"
