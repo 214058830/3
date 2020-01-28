@@ -20,7 +20,7 @@
           <AddUser />
         </div>
         <div v-show="MenuItem == 's2-1'">
-          <p>s2-1</p>
+          <Auth />
         </div>
       </Col>
     </Row>
@@ -28,10 +28,12 @@
 </template>
 
 <script>
+import Auth from "./Auth";
 import AddUser from "./AddUser";
 
 export default {
   components: {
+    Auth,
     AddUser
   },
   data() {

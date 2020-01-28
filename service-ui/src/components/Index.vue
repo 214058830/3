@@ -59,7 +59,10 @@ export default {
     },
     // 退出账号 参数: [bool]
     logout(flag) {
-      this.updataUserInfo("", "");
+      var arr = ["id", "mail", "username", "logo", "password"];
+      arr.forEach(item => {
+        this.updataUserInfo(item, "");
+      });
       this.updataFlag(flag);
     }
   }

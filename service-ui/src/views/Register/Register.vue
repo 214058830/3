@@ -12,9 +12,8 @@
               </FormItem>
               <FormItem label="邮箱" prop="mail">
                 <Input v-model="formValidate.mail" style="width: 300px" placeholder="请输入Email"></Input>
-                <span class="layout_description">可以在个人资料设置中更改</span>
+                <span class="layout_description">邮箱是账号唯一的凭证，只能设置一次。</span>
               </FormItem>
-
               <FormItem label="密码" prop="password">
                 <Input
                   v-model="formValidate.password"
@@ -32,7 +31,7 @@
                 ></Input>
               </FormItem>
               <FormItem>
-                <Button type="primary" @click="handleSubmit()" style="margin-left: 50px">注册</Button>
+                <Button type="primary" @click="register()" style="margin-left: 50px">注册</Button>
                 <Button @click="handleReset('formValidate')" style="margin-left: 10px">清空</Button>
               </FormItem>
             </Form>
@@ -111,18 +110,17 @@ export default {
     };
   },
   methods: {
-    handleSubmit() {
-      // console.log(this.formValidate);
-      // this.axios
-      //   .post("http://jsonplaceholder.typicode.com/todos", this.formValidate)
-      //   .then(res => {
-      //     console.log(res.data); // res 返回的是传出的参数
-      //   });
+    register() {
+      console.log(this.formValidate);
       this.axios
-        .get("http://localhost:8081/v1/user") //请求接口
-        .then(response => {
-          console.log(response.data);
-          console.log(response.status + " " + response.statusText);
+        .post(
+          process.env.VUE_APP_BASE_URL +
+            process.env.VUE_APP_VERSION +
+            "/user/register",
+          this.formValidate
+        )
+        .then(res => {
+          console.log(res.data); // res 返回的是传出的参数
         });
     },
     handleReset(name) {

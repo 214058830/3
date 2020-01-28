@@ -103,11 +103,16 @@ export default {
             if (res.data.code == 2000) {
               this.$Message.success("登录成功");
               this.$emit("changeFlag", "true");
-              this.$emit("updataUserInfo", "id", res.data.data.id);
-              this.$emit("updataUserInfo", "mail", res.data.data.mail);
-              this.$emit("updataUserInfo", "username", res.data.data.user_name);
-              this.$emit("updataUserInfo", "password", res.data.data.pass_word);
-              this.$emit("updataUserInfo", "logo", res.data.data.logo);
+              const map = new Map([
+                ["id", res.data.data.id],
+                ["mail", res.data.data.mail],
+                ["username", res.data.data.user_name],
+                ["password", res.data.data.pass_word],
+                ["logo", res.data.data.logo]
+              ]);
+              for (let [key, value] of map) {
+                this.$emit("updataUserInfo", key, value);
+              }
               this.$router.replace({ path: "/" });
             } else if (res.data.code == 5000) {
               this.$Message.success("服务器出错，请稍后重试。");
