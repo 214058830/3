@@ -111,7 +111,11 @@ export default {
   },
   methods: {
     register() {
-      console.log(this.formValidate);
+      // 登录的过渡动画
+      const msg = this.$Message.loading({
+        content: "Loading...",
+        duration: 0
+      });
       this.axios
         .post(
           process.env.VUE_APP_BASE_URL +
@@ -120,6 +124,12 @@ export default {
           this.formValidate
         )
         .then(res => {
+          setTimeout(msg, 0);
+          let data = res.data;
+          if ((data.code = "2000")) {
+            this.$Message.success("注册成功");
+            this.$router.replace({ path: "/login" });
+          }
           console.log(res.data); // res 返回的是传出的参数
         });
     },
