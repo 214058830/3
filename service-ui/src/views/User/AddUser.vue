@@ -1,38 +1,35 @@
 <template>
-  <div class="layout-content">
-    <div class="layout_register">
-      <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
-        <FormItem label="姓名" prop="name">
-          <Input v-model="formValidate.name" style="width: 300px" placeholder="请输入用户名"></Input>
-          <span class="layout_description">只能包含大小写字母、数字和下划线（6-20字符）</span>
-        </FormItem>
-        <FormItem label="邮箱" prop="mail">
-          <Input v-model="formValidate.mail" style="width: 300px" placeholder="请输入Email"></Input>
-          <span class="layout_description">可以在个人资料设置中更改</span>
-        </FormItem>
-
-        <FormItem label="密码" prop="password">
-          <Input
-            v-model="formValidate.password"
-            type="password"
-            style="width: 300px"
-            placeholder="请输入密码"
-          ></Input>
-        </FormItem>
-        <FormItem label="确认密码" prop="password_sure">
-          <Input
-            v-model="formValidate.password_sure"
-            type="password"
-            style="width: 300px"
-            placeholder="请再次确认密码"
-          ></Input>
-        </FormItem>
-        <FormItem>
-          <Button type="primary" @click="handleSubmit()" style="margin-left: 50px">注册</Button>
-          <Button @click="handleReset('formValidate')" style="margin-left: 10px">清空</Button>
-        </FormItem>
-      </Form>
-    </div>
+  <div class="layout-content" style="margin-left: 40px">
+    <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
+      <FormItem label="用户名" prop="name">
+        <Input v-model="formValidate.name" style="width: 300px" placeholder="请输入用户名"></Input>
+        <span class="layout_description">只能包含大小写字母、数字和下划线(最多12字符)</span>
+      </FormItem>
+      <FormItem label="邮箱" prop="mail">
+        <Input v-model="formValidate.mail" style="width: 300px" placeholder="请输入Email"></Input>
+        <span class="layout_description">邮箱是账号唯一的凭证，只能设置一次。</span>
+      </FormItem>
+      <FormItem label="密码" prop="password">
+        <Input
+          v-model="formValidate.password"
+          type="password"
+          style="width: 300px"
+          placeholder="请输入密码"
+        ></Input>
+      </FormItem>
+      <FormItem label="确认密码" prop="password_sure">
+        <Input
+          v-model="formValidate.password_sure"
+          type="password"
+          style="width: 300px"
+          placeholder="请再次确认密码"
+        ></Input>
+      </FormItem>
+      <FormItem>
+        <Button type="primary" @click="register('formValidate')" style="margin-left: 50px">录入</Button>
+        <Button @click="handleReset('formValidate')" style="margin-left: 10px">清空</Button>
+      </FormItem>
+    </Form>
   </div>
 </template>
 
@@ -40,6 +37,16 @@
 export default {
   components: {},
   data() {
+    const validatePassCheck = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("Please enter your password again"));
+      } else if (value !== this.formValidate.password) {
+        callback(new Error("The two input passwords do not match!"));
+      } else {
+        callback();
+      }
+    };
+
     return {
       formValidate: {
         name: "",
@@ -53,6 +60,10 @@ export default {
             required: true,
             message: "The name cannot be empty",
             trigger: "blur"
+          },
+          {
+            max: 12,
+            message: "请输入最多12位"
           }
         ],
         mail: [
@@ -68,6 +79,14 @@ export default {
             required: true,
             message: "The password cannot be empty",
             trigger: "blur"
+          },
+          {
+            min: 6,
+            message: "请输入最少6位"
+          },
+          {
+            max: 18,
+            message: "请输入最少18位"
           }
         ],
         password_sure: [
@@ -75,25 +94,52 @@ export default {
             required: true,
             message: "The password_sure cannot be empty",
             trigger: "blur"
+          },
+          {
+            required: true,
+            validator: validatePassCheck,
+            trigger: "change"
           }
         ]
       }
     };
   },
   methods: {
-    handleSubmit() {
-      // console.log(this.formValidate);
-      // this.axios
-      //   .post("http://jsonplaceholder.typicode.com/todos", this.formValidate)
-      //   .then(res => {
-      //     console.log(res.data); // res 返回的是传出的参数
-      //   });
-      this.axios
-        .get("http://localhost:8081/v1/user") //请求接口
-        .then(response => {
-          console.log(response.data);
-          console.log(response.status + " " + response.statusText);
-        });
+    register(name) {
+      this.$refs[name].validate(valid => {
+        if (valid) {
+          // 登录的过渡动画
+          const msg = this.$Message.loading({
+            content: "Loading...",
+            duration: 0
+          });
+          this.axios
+            .post(
+              process.env.VUE_APP_BASE_URL +
+                process.env.VUE_APP_VERSION +
+                "/user/register",
+              this.formValidate
+            )
+            .then(
+              res => {
+                setTimeout(msg, 0);
+                let data = res.data;
+                if (data.code == 2000) {
+                  this.$Message.success("录入成功");
+                } else {
+                  this.$Message.warning("录入失败，" + data.msg);
+                }
+                console.log(res.data); // res 返回的是传出的参数
+              },
+              res => {
+                setTimeout(msg, 0);
+                this.$Message.warning("录入失败，请刷新或重试。");
+              }
+            );
+        } else {
+          this.$Message.warning("请输入正确的内容");
+        }
+      });
     },
     handleReset(name) {
       this.$refs[name].resetFields();
@@ -103,15 +149,10 @@ export default {
 </script>
 
 <style scoped>
-.layout_register {
-  margin-left: -40px;
-}
-
 .layout_description {
   margin-left: 10px;
   font-size: 15px;
 }
-
 .layout-content {
   min-height: 200px;
   margin: 15px;

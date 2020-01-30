@@ -17,7 +17,7 @@
         <Dropdown
           trigger="custom"
           :visible="visible"
-          style="margin-right: 20px"
+          style="margin-right: 20px; cursor:pointer"
           placement="bottom-end"
         >
           <div class="layout-center" @click="handleOpenAndClose">
@@ -27,7 +27,7 @@
             <Icon type="ios-arrow-down" v-else />
           </div>
           <Dropdown-menu slot="list" style="width: 240px; margin-left: 30px">
-            <div style="height: 50px;" @click="center">
+            <div style="height: 50px; margin-top: -10px" @click="center">
               <Icon size="20" type="ios-contact-outline" />个人中心
             </div>
             <div style="height: 60px; font-size: 16px" @click="logout">

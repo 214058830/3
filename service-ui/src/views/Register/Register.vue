@@ -8,7 +8,7 @@
             <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
               <FormItem label="用户名" prop="name">
                 <Input v-model="formValidate.name" style="width: 300px" placeholder="请输入用户名"></Input>
-                <span class="layout_description">只能包含大小写字母、数字和下划线</span>
+                <span class="layout_description">只能包含大小写字母、数字和下划线(最多12字符)</span>
               </FormItem>
               <FormItem label="邮箱" prop="mail">
                 <Input v-model="formValidate.mail" style="width: 300px" placeholder="请输入Email"></Input>
@@ -43,7 +43,11 @@
                 ></Input>
               </FormItem>
               <FormItem>
-                <Button type="primary" @click="register()" style="margin-left: 50px">注册</Button>
+                <Button
+                  type="primary"
+                  @click="register('formValidate')"
+                  style="margin-left: 50px"
+                >注册</Button>
                 <Button @click="handleReset('formValidate')" style="margin-left: 10px">清空</Button>
               </FormItem>
             </Form>
@@ -105,6 +109,10 @@ export default {
             required: true,
             message: "The name cannot be empty",
             trigger: "blur"
+          },
+          {
+            max: 12,
+            message: "请输入最多12位"
           }
         ],
         mail: [
@@ -120,14 +128,26 @@ export default {
             required: true,
             message: "The password cannot be empty",
             trigger: "blur"
+          },
+          {
+            min: 6,
+            message: "请输入最少6位"
+          },
+          {
+            max: 18,
+            message: "请输入最少18位"
           }
         ],
         password_sure: [
           {
             required: true,
-            validator: validatePassCheck,
-            // message: "The password_sure cannot be empty",
+            message: "The password_sure cannot be empty",
             trigger: "blur"
+          },
+          {
+            required: true,
+            validator: validatePassCheck,
+            trigger: "change"
           }
         ],
         verification_code: [
@@ -141,36 +161,42 @@ export default {
     };
   },
   methods: {
-    register() {
-      // 登录的过渡动画
-      const msg = this.$Message.loading({
-        content: "Loading...",
-        duration: 0
+    register(name) {
+      this.$refs[name].validate(valid => {
+        if (valid) {
+          // 登录的过渡动画
+          const msg = this.$Message.loading({
+            content: "Loading...",
+            duration: 0
+          });
+          this.axios
+            .post(
+              process.env.VUE_APP_BASE_URL +
+                process.env.VUE_APP_VERSION +
+                "/user/register",
+              this.formValidate
+            )
+            .then(
+              res => {
+                setTimeout(msg, 0);
+                let data = res.data;
+                if (data.code == 2000) {
+                  this.$Message.success("注册成功");
+                  this.$router.replace({ path: "/login" });
+                } else {
+                  this.$Message.warning("注册失败，" + data.msg);
+                }
+                console.log(res.data); // res 返回的是传出的参数
+              },
+              res => {
+                setTimeout(msg, 0);
+                this.$Message.warning("注册失败，请刷新或重试。");
+              }
+            );
+        } else {
+          this.$Message.warning("请输入正确的内容");
+        }
       });
-      this.axios
-        .post(
-          process.env.VUE_APP_BASE_URL +
-            process.env.VUE_APP_VERSION +
-            "/user/register",
-          this.formValidate
-        )
-        .then(
-          res => {
-            setTimeout(msg, 0);
-            let data = res.data;
-            if (data.code == 2000) {
-              this.$Message.success("注册成功");
-              this.$router.replace({ path: "/login" });
-            } else {
-              this.$Message.warning("注册失败，" + data.msg);
-            }
-            console.log(res.data); // res 返回的是传出的参数
-          },
-          res => {
-            setTimeout(msg, 0);
-            this.$Message.warning("注册失败，请刷新或重试。");
-          }
-        );
     },
     handleReset(name) {
       this.$refs[name].resetFields();

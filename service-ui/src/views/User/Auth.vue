@@ -1,61 +1,90 @@
 <template>
-  <Transfer
-    :titles="titleArr"
-    :data="data3"
-    :target-keys="targetKeys3"
-    :list-style="listStyle"
-    :render-format="render3"
-    :operations="['To left','To right']"
-    filterable
-    @on-change="handleChange3"
-  >
-    <div :style="{float: 'right', margin: '5px'}">
-      <Button size="small" @click="reloadMockData">Refresh</Button>
-    </div>
-  </Transfer>
+  <div>
+    <Table border ref="selection" :columns="columns" :data="user"></Table>
+    <Button @click="handleSelectAll(true)">Set all selected</Button>
+    <Button @click="handleSelectAll(false)">Cancel all selected</Button>
+    <Button style="float: right" type="primary" size="large" @click="exportData()">
+      <Icon type="ios-download-outline"></Icon>Export source data
+    </Button>
+  </div>
 </template>
 
 <script>
 export default {
   data() {
     return {
-      titleArr: ["用户", "管理员"],
-      data3: this.getMockData(),
-      targetKeys3: this.getTargetKeys(),
-      listStyle: {
-        width: "300px",
-        height: "400px"
-      }
+      user: [],
+      columns: [
+        {
+          type: "selection",
+          width: 60,
+          align: "center",
+          key: "logo"
+        },
+        {
+          title: "邮箱",
+          key: "mail"
+        },
+        {
+          title: "用户名",
+          key: "user_name"
+        },
+        {
+          title: "管理员",
+          key: "logo"
+        },
+        {
+          title: "注册时间",
+          key: "create_time"
+        }
+      ],
+      data1: [
+        {
+          name: "John Brown",
+          age: 18,
+          address: "New York No. 1 Lake Park",
+          date: "2016-10-03"
+        },
+        {
+          name: "Jim Green",
+          age: 24,
+          address: "London No. 1 Lake Park",
+          date: "2016-10-01"
+        },
+        {
+          name: "Joe Black",
+          age: 30,
+          address: "Sydney No. 1 Lake Park",
+          date: "2016-10-02"
+        },
+        {
+          name: "Jon Snow",
+          age: 26,
+          address: "Ottawa No. 2 Lake Park",
+          date: "2016-10-04"
+        }
+      ]
     };
   },
   methods: {
-    getMockData() {
-      let mockData = [];
-      for (let i = 1; i <= 20; i++) {
-        mockData.push({
-          key: i.toString(),
-          label: "Content " + i,
-          description: "The desc of content  " + i,
-          disabled: Math.random() * 3 < 1
+    handleSelectAll(status) {
+      this.$refs.selection.selectAll(status);
+    },
+    getAllUser() {
+      this.axios
+        .get("http://localhost:8081/v1/user") //请求接口
+        .then(response => {
+          this.user = response.data;
         });
-      }
-      return mockData;
     },
-    getTargetKeys() {
-      return this.getMockData()
-        .filter(() => Math.random() * 2 > 1)
-        .map(item => item.key);
-    },
-    handleChange3(newTargetKeys) {
-      this.targetKeys3 = newTargetKeys;
-    },
-    render3(item) {
-      return item.label + " - " + item.description;
-    },
-    reloadMockData() {
-      this.data3 = this.getMockData();
-      this.targetKeys3 = this.getTargetKeys();
+    exportData() {
+      this.$refs.table.exportCsv({
+        filename: "The original data"
+      });
     }
+  },
+  mounted() {
+    this.getAllUser();
   }
 };
 </script>
