@@ -6,13 +6,25 @@
           <p slot="title">注册新用户</p>
           <div class="layout_register">
             <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
-              <FormItem label="姓名" prop="name">
+              <FormItem label="用户名" prop="name">
                 <Input v-model="formValidate.name" style="width: 300px" placeholder="请输入用户名"></Input>
-                <span class="layout_description">只能包含大小写字母、数字和下划线（6-20字符）</span>
+                <span class="layout_description">只能包含大小写字母、数字和下划线</span>
               </FormItem>
               <FormItem label="邮箱" prop="mail">
                 <Input v-model="formValidate.mail" style="width: 300px" placeholder="请输入Email"></Input>
                 <span class="layout_description">邮箱是账号唯一的凭证，只能设置一次。</span>
+              </FormItem>
+              <FormItem label="验证码" prop="verification_code">
+                <Input
+                  v-model="formValidate.verification_code"
+                  style="width: 100px"
+                  placeholder="请输入验证码"
+                ></Input>
+                <span
+                  class="layout_description"
+                  style="cursor:pointer"
+                  @click="getVerificationCode()"
+                >获取验证码</span>
               </FormItem>
               <FormItem label="密码" prop="password">
                 <Input
@@ -69,12 +81,23 @@
 export default {
   components: {},
   data() {
+    const validatePassCheck = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("Please enter your password again"));
+      } else if (value !== this.formValidate.password) {
+        callback(new Error("The two input passwords do not match!"));
+      } else {
+        callback();
+      }
+    };
+
     return {
       formValidate: {
         name: "",
         mail: "",
         password: "",
-        password_sure: ""
+        password_sure: "",
+        verification_code: ""
       },
       ruleValidate: {
         name: [
@@ -102,7 +125,15 @@ export default {
         password_sure: [
           {
             required: true,
-            message: "The password_sure cannot be empty",
+            validator: validatePassCheck,
+            // message: "The password_sure cannot be empty",
+            trigger: "blur"
+          }
+        ],
+        verification_code: [
+          {
+            required: true,
+            message: "The verification_code cannot be empty",
             trigger: "blur"
           }
         ]
@@ -123,18 +154,29 @@ export default {
             "/user/register",
           this.formValidate
         )
-        .then(res => {
-          setTimeout(msg, 0);
-          let data = res.data;
-          if ((data.code = "2000")) {
-            this.$Message.success("注册成功");
-            this.$router.replace({ path: "/login" });
+        .then(
+          res => {
+            setTimeout(msg, 0);
+            let data = res.data;
+            if (data.code == 2000) {
+              this.$Message.success("注册成功");
+              this.$router.replace({ path: "/login" });
+            } else {
+              this.$Message.warning("注册失败，" + data.msg);
+            }
+            console.log(res.data); // res 返回的是传出的参数
+          },
+          res => {
+            setTimeout(msg, 0);
+            this.$Message.warning("注册失败，请刷新或重试。");
           }
-          console.log(res.data); // res 返回的是传出的参数
-        });
+        );
     },
     handleReset(name) {
       this.$refs[name].resetFields();
+    },
+    getVerificationCode() {
+      this.formValidate.verification_code = "1234";
     }
   }
 };
