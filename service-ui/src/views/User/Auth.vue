@@ -4,8 +4,8 @@
       search
       enter-button
       v-model="searchContent"
-      style="width: 300px"
-      placeholder="Enter something..."
+      style="width: 400px"
+      placeholder="可输入邮箱、用户名、管理员、注册时间关键字进行搜索"
       clearable
       @on-change="search"
     />
@@ -34,7 +34,7 @@ export default {
       page: {
         number: 1,
         size: 10,
-        total: Number
+        total: 0
       },
       data: [], // 表格中当前显示的数据
       user: [], // 所有的总数据
@@ -151,22 +151,15 @@ export default {
       this.updataTable();
     },
     search() {
-      console.log(this.searchContent);
-      let argumentObj = {
-        user_name: this.searchContent,
-        mail: this.searchContent
-      };
-      let res = this.user;
-      let dataClone = this.user;
-      for (let argu in argumentObj) {
-        if (argumentObj[argu].length > 0) {
-          res = dataClone.filter(d => {
-            return d[argu].indexOf(argumentObj[argu]) > -1;
-          });
-          dataClone = res;
-        }
-      }
-      this.data = res;
+      this.data = this.user.filter(d => {
+        return (
+          d.user_name.indexOf(this.searchContent) > -1 ||
+          d.mail.indexOf(this.searchContent) > -1 ||
+          String(d.logo).indexOf(this.searchContent) > -1 ||
+          d.create_time.indexOf(this.searchContent) > -1
+        );
+      });
+      this.initTable(1, 10, this.data.length);
     },
     initTable(num, size, total) {
       this.page.number = num;
