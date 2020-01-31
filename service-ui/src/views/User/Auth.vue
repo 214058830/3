@@ -99,9 +99,6 @@ export default {
     };
   },
   methods: {
-    handleSelectAll(status) {
-      this.$refs.table.selectAll(status);
-    },
     initAllUserInfo() {
       this.axios.get("http://localhost:8081/v1/user").then(response => {
         this.user = response.data;
