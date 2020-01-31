@@ -1,11 +1,20 @@
 <template>
   <div>
+    <Input
+      search
+      enter-button
+      v-model="searchContent"
+      style="width: 300px"
+      placeholder="Enter something..."
+      clearable
+      @on-change="search"
+    />
     <Table border ref="table" :columns="columns" :data="data" style="margin-left: -8px"></Table>
     <Button style="float: right" type="primary" size="large" @click="exportData()">
       <Icon type="ios-download-outline"></Icon>Export source data
     </Button>
     <Page
-      :total="this.user.length"
+      :total="this.page.total"
       :current="this.page.number"
       :page-size="this.page.size"
       show-sizer
@@ -21,9 +30,11 @@
 export default {
   data() {
     return {
+      searchContent: "",
       page: {
         number: 1,
-        size: 10
+        size: 10,
+        total: Number
       },
       data: [], // 表格中当前显示的数据
       user: [], // 所有的总数据
@@ -94,6 +105,7 @@ export default {
     initAllUserInfo() {
       this.axios.get("http://localhost:8081/v1/user").then(response => {
         this.user = response.data;
+        this.initTable(1, 10, this.user.length);
         this.updataTable(); // 请求完数据后刷新自动表格数据
       });
     },
@@ -124,7 +136,6 @@ export default {
       this.updataTable();
     },
     updataTable() {
-      console.log(this.page);
       this.data = [];
       if (this.user.length >= this.page.number * this.page.size) {
         this.data = this.user.slice(
@@ -138,6 +149,29 @@ export default {
     changePageSize(size) {
       this.page.size = size;
       this.updataTable();
+    },
+    search() {
+      console.log(this.searchContent);
+      let argumentObj = {
+        user_name: this.searchContent,
+        mail: this.searchContent
+      };
+      let res = this.user;
+      let dataClone = this.user;
+      for (let argu in argumentObj) {
+        if (argumentObj[argu].length > 0) {
+          res = dataClone.filter(d => {
+            return d[argu].indexOf(argumentObj[argu]) > -1;
+          });
+          dataClone = res;
+        }
+      }
+      this.data = res;
+    },
+    initTable(num, size, total) {
+      this.page.number = num;
+      this.page.size = size;
+      this.page.total = total;
     }
   },
   mounted() {
