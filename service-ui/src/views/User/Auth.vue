@@ -114,18 +114,33 @@ export default {
     setup(data) {
       if (data.mail == "admin@qq.com") {
         this.$Message.warning("对不起，您没有该操作权限。");
+      } else if (data.logo == true) {
+        this.$Message.warning("该用户已经为管理员，无需再次设置。");
       } else {
         this.$Modal.info({
           title: " 确定设置该用户管理员？",
-          content: `Name：${data.user_name}<br>Mail：${data.mail}`
+          content: `Name：${data.user_name}<br>Mail：${data.mail}`,
+          closable: true,
+          onOk: () => {
+            this.updataAdmin(data.id, true);
+          }
         });
       }
     },
     cancle(data) {
       if (data.user_name == "admin") {
         this.$Message.warning("对不起，您没有该操作权限。");
+      } else if (data.logo == false) {
+        this.$Message.warning("该用户已经为普通用户，无需再次设置。");
       } else {
-        console.log(data);
+        this.$Modal.info({
+          title: " 确定取消该用户管理员权限？",
+          content: `Name：${data.user_name}<br>Mail：${data.mail}`,
+          closable: true,
+          onOk: () => {
+            this.updataAdmin(data.id, false);
+          }
+        });
       }
     },
     changePageNumber(num) {
@@ -162,6 +177,39 @@ export default {
       this.page.number = num;
       this.page.size = size;
       this.page.total = total;
+    },
+    updataAdmin(id, bool) {
+      let request = {
+        id: id,
+        bool: bool
+      };
+      const msg = this.$Message.loading({
+        content: "Loading...",
+        duration: 0
+      });
+      this.axios
+        .post(
+          process.env.VUE_APP_BASE_URL +
+            process.env.VUE_APP_VERSION +
+            "/user/updataAdmin",
+          request
+        )
+        .then(
+          res => {
+            console.log(res);
+            setTimeout(msg, 0);
+            if (res.data.code == 2000) {
+              this.$Message.success("设置成功");
+              this.initAllUserInfo();
+            } else {
+              this.$Message.warning("设置失败，" + res.data.msg);
+            }
+          },
+          res => {
+            setTimeout(msg, 0);
+            this.$Message.warning("设置失败，请刷新或重试。");
+          }
+        );
     }
   },
   mounted() {

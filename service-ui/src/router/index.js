@@ -30,12 +30,12 @@ const routes = [
         children: [
           {
             path: 'index',
-            name: 'index',
+            name: 'home_index',
             component: Home_index
           },
           {
             path: 'about',
-            name: 'about',
+            name: 'home_about',
             component: Home_about
           }
         ]
