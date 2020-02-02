@@ -20,7 +20,7 @@
       </Col>
       <Col span="18">
         <div v-show="MenuItem == 's1-1'">
-          <p>s1-1</p>
+          <router-view />
         </div>
         <div v-show="MenuItem == 's2-1'">
           <p>s2-1</p>
@@ -34,8 +34,10 @@
 </template>
 
 <script>
+import QueryAmount from "./QueryAmount";
+
 export default {
-  components: {},
+  components: { QueryAmount },
   data() {
     return {
       MenuItem: "s1-1"

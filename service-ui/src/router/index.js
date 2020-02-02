@@ -11,6 +11,8 @@ import Home from '../views/Home/Home.vue'
 import Home_about from '../views/Home/Home_about.vue'
 import Home_index from '../views/Home/Home_index.vue'
 import Center from '../views/Center/Center.vue'
+import QueryAmount from '../views/Water/QueryAmount.vue'
+import QueryContributeAmount from '../views/Water/QueryContributeAmount.vue'
 
 Vue.use(VueRouter)
 
@@ -43,7 +45,20 @@ const routes = [
       {
         path: 'water',
         name: 'water',
-        component: Water
+        component: Water,
+        redirect: '/water/query_amount',
+        children: [
+          {
+            path: 'query_amount',
+            name: 'QueryAmount',
+            component: QueryAmount
+          },
+          {
+            path: 'query_contribute_amount',
+            name: 'QueryContributeAmount',
+            component: QueryContributeAmount
+          }
+        ]
       },
       {
         path: '/user',
