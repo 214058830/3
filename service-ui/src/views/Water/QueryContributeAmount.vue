@@ -37,7 +37,7 @@ export default {
         total: 0
       },
       data: [], // 表格中当前显示的数据
-      user: [], // 所有的总数据
+      user_contribute_amount: [], // 所有的总数据
       columns: [
         {
           title: "邮箱",
@@ -49,7 +49,10 @@ export default {
         },
         {
           title: "缴费金额",
-          key: "amount"
+          key: "contribute_amount",
+          render: (h, params) => {
+            return h("div", params.row.contribute_amount.toFixed(2));
+          }
         },
         {
           title: "时间",
@@ -59,16 +62,23 @@ export default {
     };
   },
   methods: {
-    initAllUserInfo() {
-      this.axios.get("http://localhost:8081/v1/water").then(response => {
-        this.user = response.data;
-        this.initTable(1, 10, this.user.length);
-        this.updataTable(); // 请求完数据后刷新自动表格数据
-      });
+    initUserContributeHistoryInfo() {
+      this.axios
+        .post(
+          process.env.VUE_APP_BASE_URL +
+            process.env.VUE_APP_VERSION +
+            "/water/contribute_history",
+          this.$route.params
+        )
+        .then(response => {
+          this.user_contribute_amount = response.data.data;
+          this.initTable(1, 10, this.user_contribute_amount.length);
+          this.updataTable(); // 请求完数据后刷新自动表格数据
+        });
     },
     exportData() {
       this.$refs.table.exportCsv({
-        filename: "用户金额"
+        filename: "缴费历史账单"
       });
     },
     changePageNumber(num) {
@@ -77,13 +87,18 @@ export default {
     },
     updataTable() {
       this.data = [];
-      if (this.user.length >= this.page.number * this.page.size) {
-        this.data = this.user.slice(
+      if (
+        this.user_contribute_amount.length >=
+        this.page.number * this.page.size
+      ) {
+        this.data = this.user_contribute_amount.slice(
           (this.page.number - 1) * this.page.size,
           this.page.number * this.page.size
         );
       } else {
-        this.data = this.user.slice((this.page.number - 1) * this.page.size);
+        this.data = this.user_contribute_amount.slice(
+          (this.page.number - 1) * this.page.size
+        );
       }
     },
     changePageSize(size) {
@@ -91,11 +106,10 @@ export default {
       this.updataTable();
     },
     search() {
-      this.data = this.user.filter(d => {
+      this.data = this.user_contribute_amount.filter(d => {
         return (
           d.user_name.indexOf(this.searchContent) > -1 ||
           d.mail.indexOf(this.searchContent) > -1 ||
-          String(d.logo).indexOf(this.searchContent) > -1 ||
           d.create_time.indexOf(this.searchContent) > -1
         );
       });
@@ -105,13 +119,10 @@ export default {
       this.page.number = num;
       this.page.size = size;
       this.page.total = total;
-    },
-    queryContributeAmount(row) {
-      console.log(row);
     }
   },
   mounted() {
-    this.initAllUserInfo();
+    this.initUserContributeHistoryInfo();
   }
 };
 </script>

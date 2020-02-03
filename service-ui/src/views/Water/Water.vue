@@ -5,7 +5,7 @@
         <Menu :active-name="MenuItem" @on-select="selectMenuItem">
           <Menu-group title="水利信息查询">
             <Menu-item name="s1-1">
-              <Icon type="document-text"></Icon>查询信息
+              <Icon type="document-text"></Icon>查询余额
             </Menu-item>
           </Menu-group>
           <Menu-group title="水利信息更改">
@@ -20,7 +20,7 @@
       </Col>
       <Col span="18">
         <div v-show="MenuItem == 's1-1'">
-          <router-view />
+          <router-view :logo="logo" :mail="mail" />
         </div>
         <div v-show="MenuItem == 's2-1'">
           <p>s2-1</p>
@@ -37,6 +37,11 @@
 import QueryAmount from "./QueryAmount";
 
 export default {
+  props: {
+    mail: String,
+    logo: String,
+    flag: String
+  },
   components: { QueryAmount },
   data() {
     return {
@@ -48,7 +53,11 @@ export default {
       this.MenuItem = name;
     }
   },
-  mounted() {}
+  mounted() {
+    if (this.flag == "false") {
+      this.$router.push({ path: "/login" });
+    }
+  }
 };
 </script>
 

@@ -115,7 +115,7 @@ export default {
               }
               this.$router.replace({ path: "/" });
             } else if (res.data.code == 5000) {
-              this.$Message.success("服务器出错，请稍后重试。");
+              this.$Message.warning("服务器出错，请稍后重试。");
             } else {
               this.$Message.warning("登录失败，用户名或密码错误。");
             }

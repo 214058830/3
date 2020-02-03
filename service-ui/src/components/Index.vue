@@ -7,6 +7,9 @@
       :id="id"
       :username="username"
       :password="password"
+      :mail="mail"
+      :logo="logo"
+      :flag="flag"
     ></router-view>
     <Footer />
     <BackTop></BackTop>
@@ -33,7 +36,7 @@ export default {
     };
   },
   methods: {
-    // 更新登录标志 参数[bool]
+    // 更新登录标志 参数: [true/false]
     updataFlag(flag) {
       sessionStorage.flag = flag;
       this.flag = sessionStorage.flag;

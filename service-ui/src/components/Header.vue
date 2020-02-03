@@ -13,7 +13,7 @@
         </Menu-item>
         <Menu-item name="home" to="/">首页</Menu-item>
         <Menu-item name="water" to="/water">水利信息系统</Menu-item>
-        <Menu-item name="user" to="/user" v-if="this.mail == 'admin@qq.com'">用户管理</Menu-item>
+        <Menu-item name="user" to="/user" v-if="this.logo == 'true'">用户管理</Menu-item>
         <Menu-item name="platform" to="/platform">论坛</Menu-item>
       </div>
       <div class="layout-registered" v-if="this.flag === 'true'">
@@ -52,6 +52,7 @@
 export default {
   props: {
     flag: String,
+    logo: String,
     mail: String
   },
   data() {
@@ -68,6 +69,7 @@ export default {
     },
     logout() {
       this.$emit("logout", "false");
+      this.$router.push({ path: "/" });
     },
     center() {
       this.handleOpenAndClose();
