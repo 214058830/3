@@ -8,7 +8,7 @@
               <Icon type="document-text"></Icon>查询余额
             </Menu-item>
           </Menu-group>
-          <Menu-group title="水利信息更改">
+          <Menu-group title="水利信息更改" v-if="this.logo == 'true'">
             <Menu-item name="s2-1">
               <Icon type="heart"></Icon>录入信息
             </Menu-item>
@@ -20,10 +20,10 @@
       </Col>
       <Col span="18">
         <div v-show="MenuItem == 's1-1'">
-          <router-view :logo="logo" :mail="mail" />
+          <router-view :logo="logo" :mail="mail" :flag="flag" />
         </div>
         <div v-show="MenuItem == 's2-1'">
-          <p>s2-1</p>
+          <AddInfo />
         </div>
         <div v-show="MenuItem == 's2-2'">
           <p>s2-2</p>
@@ -35,6 +35,7 @@
 
 <script>
 import QueryAmount from "./QueryAmount";
+import AddInfo from "./AddInfo";
 
 export default {
   props: {
@@ -42,7 +43,7 @@ export default {
     logo: String,
     flag: String
   },
-  components: { QueryAmount },
+  components: { QueryAmount, AddInfo },
   data() {
     return {
       MenuItem: "s1-1"
@@ -54,8 +55,8 @@ export default {
     }
   },
   mounted() {
-    if (this.flag == "false") {
-      this.$router.push({ path: "/login" });
+    if (this.flag != "true") {
+      this.$router.replace({ path: "/login" });
     }
   }
 };

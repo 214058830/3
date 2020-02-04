@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="this.logo == 'true'">
+    <div v-if="this.flag == 'true' && this.logo == 'true'">
       <Input
         search
         enter-button
@@ -25,7 +25,7 @@
         @on-page-size-change="changePageSize"
       />
     </div>
-    <div v-else style="padding: 20px">
+    <div v-if="this.flag == 'true' && this.logo == 'false'" style="padding: 20px">
       <Card :bordered="false" style="width: 700px">
         <p slot="title">账户余额</p>
         <p
@@ -49,7 +49,8 @@
 export default {
   props: {
     mail: String,
-    logo: String
+    logo: String,
+    flag: String
   },
   data() {
     return {
@@ -199,7 +200,7 @@ export default {
   mounted() {
     if (this.logo == "true") {
       this.initAllUserAmount();
-    } else {
+    } else if (this.logo == "false") {
       this.getUserAmount(this.mail);
     }
   }
