@@ -14,7 +14,10 @@
       </RadioGroup>
     </Card>
     <Card v-if="this.current == 1">
-      <p style="margin-left: -750px" slot="title">2</p>
+      <p v-if="this.button == '余额信息'" style="margin-left: -750px" slot="title">输入信息</p>
+      <p v-if="this.button == '缴费历史信息'" style="margin-left: -750px" slot="title">上传缴费电子单</p>
+      <Amount v-if="this.button == '余额信息'" />
+      <ContributeHistory v-if="this.button == '缴费历史信息'" />
     </Card>
     <div class="button">
       <Button :disabled="lastdisable" type="primary" @click="last">上一步</Button>
@@ -24,7 +27,10 @@
 </template>
 
 <script>
+import Amount from "./Amount";
+import ContributeHistory from "./ContributeHistory";
 export default {
+  components: { ContributeHistory, Amount },
   data() {
     return {
       button: "余额信息",

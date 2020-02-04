@@ -34,8 +34,7 @@
 </template>
 
 <script>
-import QueryAmount from "./QueryAmount";
-import AddInfo from "./AddInfo";
+import AddInfo from "./AddInfo/AddInfo";
 
 export default {
   props: {
@@ -43,7 +42,7 @@ export default {
     logo: String,
     flag: String
   },
-  components: { QueryAmount, AddInfo },
+  components: { AddInfo },
   data() {
     return {
       MenuItem: "s1-1"

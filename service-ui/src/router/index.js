@@ -11,8 +11,8 @@ import Home from '../views/Home/Home.vue'
 import Home_about from '../views/Home/Home_about.vue'
 import Home_index from '../views/Home/Home_index.vue'
 import Center from '../views/Center/Center.vue'
-import QueryAmount from '../views/Water/QueryAmount.vue'
-import QueryContributeAmount from '../views/Water/QueryContributeAmount.vue'
+import QueryAmount from '../views/Water/Query/QueryAmount.vue'
+import QueryContributeAmount from '../views/Water/Query/QueryContributeAmount.vue'
 
 Vue.use(VueRouter)
 
