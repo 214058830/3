@@ -14,9 +14,13 @@
         </FormItem>
       </Form>
       <Upload
+        :on-success="uploadSuccess"
+        :on-remove="removeSuccess"
         accept="image/gif, image/jpeg, image/png, image/jpg"
         type="drag"
-        action="//jsonplaceholder.typicode.com/posts/"
+        :action="uploadUrl"
+        name="contributeHistoryPhoto"
+        :data="uploadData"
       >
         <div style="padding: 20px 0">
           <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
@@ -33,6 +37,9 @@
 
 <script>
 export default {
+  props: {
+    mail: String
+  },
   components: {},
   data() {
     const validateAmount = (rule, value, callback) => {
@@ -46,8 +53,16 @@ export default {
       }, 1000);
     };
     return {
+      uploadUrl:
+        process.env.VUE_APP_BASE_URL +
+        process.env.VUE_APP_VERSION +
+        "/water/contribute_history/upload",
+      uploadData: {
+        mail: this.mail
+      },
+      filecount: 0,
       formValidate: {
-        mail: "",
+        mail: this.mail,
         history_id: "",
         amount: 0
       },
@@ -84,7 +99,7 @@ export default {
     },
     submit(name) {
       this.$refs[name].validate(valid => {
-        if (valid) {
+        if (valid && this.filecount > 0) {
           // 登录的过渡动画
           const msg = this.$Message.loading({
             content: "Loading...",
@@ -114,10 +129,20 @@ export default {
                 this.$Message.warning("注册失败，请刷新或重试。");
               }
             );
-        } else {
+        } else if (!valid) {
           this.$Message.warning("请输入正确的内容");
+        } else {
+          this.$Message.warning("请上传缴费照片");
         }
       });
+    },
+    uploadSuccess(response, file) {
+      console.log(response);
+      console.log(file);
+      this.filecount++;
+    },
+    removeSuccess(file) {
+      this.filecount--;
     }
   },
   computed: {},

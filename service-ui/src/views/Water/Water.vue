@@ -23,7 +23,7 @@
           <router-view :logo="logo" :mail="mail" :flag="flag" />
         </div>
         <div v-show="MenuItem == 's2-1'">
-          <AddInfo />
+          <AddInfo :mail="mail" />
         </div>
         <div v-show="MenuItem == 's2-2'">
           <p>s2-2</p>
