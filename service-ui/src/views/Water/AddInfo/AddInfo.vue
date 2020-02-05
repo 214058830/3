@@ -9,8 +9,15 @@
         <FormItem label="缴费账单号" prop="history_id">
           <Input v-model="formValidate.history_id" style="width: 300px" placeholder="请输入缴费账单号"></Input>
         </FormItem>
+        <FormItem label="缴费金额" prop="amount">
+          <Input v-model="formValidate.amount" style="width: 300px" placeholder="请输入缴费金额"></Input>
+        </FormItem>
       </Form>
-      <Upload multiple type="drag" action="//jsonplaceholder.typicode.com/posts/">
+      <Upload
+        accept="image/gif, image/jpeg, image/png, image/jpg"
+        type="drag"
+        action="//jsonplaceholder.typicode.com/posts/"
+      >
         <div style="padding: 20px 0">
           <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
           <p>点击或拖拽文件到这里以上传</p>
@@ -18,13 +25,8 @@
       </Upload>
     </Card>
     <div class="button">
-      <Button :disabled="lastdisable" type="primary" @click="handleReset('formValidate')">清空</Button>
-      <Button
-        :disabled="nextdisable"
-        style="margin-left: 10px"
-        type="primary"
-        @click="submit('formValidate')"
-      >提交</Button>
+      <Button type="primary" @click="handleReset('formValidate')">清空</Button>
+      <Button style="margin-left: 10px" type="primary" @click="submit('formValidate')">提交</Button>
     </div>
   </div>
 </template>
@@ -33,10 +35,21 @@
 export default {
   components: {},
   data() {
+    const validateAmount = (rule, value, callback) => {
+      setTimeout(() => {
+        var pattern = /^\d+.?\d{0,2}$/;
+        if (value > 214748) {
+          return callback(new Error("销售报价金额过大"));
+        } else if (value <= 214748 && !pattern.test(value)) {
+          return callback(new Error("小数点后最多只能输入两位"));
+        } else return callback();
+      }, 1000);
+    };
     return {
       formValidate: {
         mail: "",
-        history_id: ""
+        history_id: "",
+        amount: 0
       },
       ruleValidate: {
         mail: [
@@ -53,6 +66,14 @@ export default {
             message: "The account number cannot be empty",
             trigger: "blur"
           }
+        ],
+        amount: [
+          {
+            required: true,
+            message: "The amount cannot be empty",
+            trigger: "blur"
+          },
+          { required: true, validator: validateAmount, trigger: "change" }
         ]
       }
     };

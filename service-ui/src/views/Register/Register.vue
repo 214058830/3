@@ -86,13 +86,15 @@ export default {
   components: {},
   data() {
     const validatePassCheck = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("Please enter your password again"));
-      } else if (value !== this.formValidate.password) {
-        callback(new Error("The two input passwords do not match!"));
-      } else {
-        callback();
-      }
+      setTimeout(() => {
+        if (value === "") {
+          callback(new Error("Please enter your password again"));
+        } else if (value !== this.formValidate.password) {
+          callback(new Error("The two input passwords do not match!"));
+        } else {
+          callback();
+        }
+      }, 1000);
     };
 
     return {
