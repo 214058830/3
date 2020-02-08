@@ -14,19 +14,24 @@
         </FormItem>
       </Form>
       <Upload
-        :on-success="uploadSuccess"
-        :on-remove="removeSuccess"
+        v-if="this.formValidate.file.length == 0"
+        :before-upload="handleUpload"
         accept="image/gif, image/jpeg, image/png, image/jpg"
         type="drag"
         :action="uploadUrl"
         name="contributeHistoryPhoto"
-        :data="uploadData"
       >
         <div style="padding: 20px 0">
           <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
           <p>点击或拖拽文件到这里以上传</p>
         </div>
       </Upload>
+      <Row v-else style="padding: 20px 0; height: 118px; text-align: center; position:relative;">
+        <Col style>
+          <Icon size="40" type="ios-checkmark-circle-outline" />
+          <p style="font-size: 16px;">上传成功</p>
+        </Col>
+      </Row>
     </Card>
     <div class="button">
       <Button type="primary" @click="handleReset('formValidate')">清空</Button>
@@ -57,14 +62,11 @@ export default {
         process.env.VUE_APP_BASE_URL +
         process.env.VUE_APP_VERSION +
         "/water/contribute_history/upload",
-      uploadData: {
-        mail: this.mail
-      },
-      filecount: 0,
       formValidate: {
         mail: this.mail,
         history_id: "",
-        amount: 0
+        amount: 0,
+        file: []
       },
       ruleValidate: {
         mail: [
@@ -94,55 +96,64 @@ export default {
     };
   },
   methods: {
+    handleUpload(file) {
+      this.formValidate.file.push(file);
+      return false;
+    },
     handleReset(name) {
       this.$refs[name].resetFields();
     },
     submit(name) {
       this.$refs[name].validate(valid => {
-        if (valid && this.filecount > 0) {
+        if (valid) {
+          if (this.formValidate.file.length == 0) {
+            this.$Message.warning("上传文件不能为空");
+            return;
+          }
           // 登录的过渡动画
           const msg = this.$Message.loading({
             content: "Loading...",
             duration: 0
           });
-          this.axios
-            .post(
-              process.env.VUE_APP_BASE_URL +
-                process.env.VUE_APP_VERSION +
-                "/user/register",
-              this.formValidate
-            )
-            .then(
-              res => {
-                setTimeout(msg, 0);
-                let data = res.data;
-                if (data.code == 2000) {
-                  this.$Message.success("注册成功");
-                  this.$router.replace({ path: "/login" });
-                } else {
-                  this.$Message.warning("注册失败，" + data.msg);
-                }
-                console.log(res.data); // res 返回的是传出的参数
-              },
-              res => {
-                setTimeout(msg, 0);
-                this.$Message.warning("注册失败，请刷新或重试。");
+          let config = {
+            headers: {
+              "Content-Type":
+                "multipart/form-data; boundary = " + new Date().getTime()
+            }
+          };
+          // 处理file上传文件
+          let formData = new FormData();
+          for (let i = 0; i < this.formValidate.file.length; i++) {
+            formData.append("file", this.formValidate.file[i]);
+          }
+          // 处理formValidate数据
+          const map = new Map([
+            ["mail", this.formValidate.mail],
+            ["history_id", this.formValidate.history_id],
+            ["amount", this.formValidate.amount]
+          ]);
+          for (let [key, value] of map) {
+            formData.append(key, value);
+          }
+          this.axios.post(this.uploadUrl, formData, config).then(
+            res => {
+              setTimeout(msg, 0);
+              let data = res.data;
+              if (data.code == 2000) {
+                this.$Message.success("提交成功");
+              } else {
+                this.$Message.warning("提交失败，" + data.msg);
               }
-            );
-        } else if (!valid) {
-          this.$Message.warning("请输入正确的内容");
+            },
+            res => {
+              setTimeout(msg, 0);
+              this.$Message.warning("提交失败，请刷新或重试。");
+            }
+          );
         } else {
-          this.$Message.warning("请上传缴费照片");
+          this.$Message.warning("请输入正确的内容");
         }
       });
-    },
-    uploadSuccess(response, file) {
-      console.log(response);
-      console.log(file);
-      this.filecount++;
-    },
-    removeSuccess(file) {
-      this.filecount--;
     }
   },
   computed: {},
