@@ -1,7 +1,7 @@
 <template>
   <div>
     <Card>
-      <p slot="title">录入缴费历史信息</p>
+      <p slot="title">录入缴费信息</p>
       <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="120">
         <FormItem label="邮箱" prop="mail">
           <Input v-model="formValidate.mail" style="width: 300px" placeholder="请输入Email"></Input>
@@ -140,7 +140,15 @@ export default {
               setTimeout(msg, 0);
               let data = res.data;
               if (data.code == 2000) {
-                this.$Message.success("提交成功");
+                const title = "提交结果";
+                const content = "<p>预计三个工作日出现结果</p>";
+                this.$Modal.success({
+                  title: title,
+                  content: content,
+                  onOk: () => {
+                    this.$router.replace({ path: "/" });
+                  }
+                });
               } else {
                 this.$Message.warning("提交失败，" + data.msg);
               }
