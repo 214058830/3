@@ -13,6 +13,8 @@ import Home_index from '../views/Home/Home_index.vue'
 import Center from '../views/Center/Center.vue'
 import QueryAmount from '../views/Water/Query/QueryAmount.vue'
 import QueryContributeAmount from '../views/Water/Query/QueryContributeAmount.vue'
+import AlterContributeAmount from '../views/Water/Alter/AlterContributeAmount.vue'
+import Alter from '../views/Water/Alter/Alter.vue'
 
 Vue.use(VueRouter)
 
@@ -57,6 +59,16 @@ const routes = [
             path: 'query_contribute_amount',
             name: 'QueryContributeAmount',
             component: QueryContributeAmount
+          },
+          {
+            path: 'alter',
+            name: 'Alter',
+            component: Alter
+          },
+          {
+            path: 'alter_contribute_amount',
+            name: 'AlterContributeAmount',
+            component: AlterContributeAmount
           }
         ]
       },

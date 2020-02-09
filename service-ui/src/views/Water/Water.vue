@@ -26,7 +26,7 @@
           <AddInfo :mail="mail" />
         </div>
         <div v-show="MenuItem == 's2-2'">
-          <p>s2-2</p>
+          <router-view />
         </div>
       </Col>
     </Row>
@@ -35,6 +35,7 @@
 
 <script>
 import AddInfo from "./AddInfo/AddInfo";
+import Alter from "./Alter/Alter";
 
 export default {
   props: {
@@ -42,7 +43,7 @@ export default {
     logo: String,
     flag: String
   },
-  components: { AddInfo },
+  components: { AddInfo, Alter },
   data() {
     return {
       MenuItem: "s1-1"
@@ -51,6 +52,11 @@ export default {
   methods: {
     selectMenuItem(name) {
       this.MenuItem = name;
+      if (this.MenuItem == "s1-1") {
+        this.$router.push({ path: "/water/query_amount" });
+      } else if (this.MenuItem == "s2-2") {
+        this.$router.push({ path: "/water/alter" });
+      }
     }
   },
   mounted() {
