@@ -15,6 +15,7 @@ import QueryAmount from '../views/Water/Query/QueryAmount.vue'
 import QueryContributeAmount from '../views/Water/Query/QueryContributeAmount.vue'
 import AlterContributeAmount from '../views/Water/Alter/AlterContributeAmount.vue'
 import Alter from '../views/Water/Alter/Alter.vue'
+import AddInfo from '../views/Water/AddInfo/AddInfo.vue'
 
 Vue.use(VueRouter)
 
@@ -59,6 +60,11 @@ const routes = [
             path: 'query_contribute_amount',
             name: 'QueryContributeAmount',
             component: QueryContributeAmount
+          },
+          {
+            path: 'add_info',
+            name: 'AddInfo',
+            component: AddInfo
           },
           {
             path: 'alter',

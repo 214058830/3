@@ -4,13 +4,24 @@
       <p slot="title">录入缴费信息</p>
       <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="120">
         <FormItem label="邮箱" prop="mail">
-          <Input v-model="formValidate.mail" style="width: 300px" placeholder="请输入Email"></Input>
+          <Input
+            :disabled="this.maildisabledflag"
+            v-model="formValidate.mail"
+            style="width: 300px"
+            placeholder="请输入Email"
+          ></Input>
         </FormItem>
         <FormItem label="缴费账单号" prop="history_id">
           <Input v-model="formValidate.history_id" style="width: 300px" placeholder="请输入缴费账单号"></Input>
         </FormItem>
         <FormItem label="缴费金额" prop="amount">
-          <Input v-model="formValidate.amount" style="width: 300px" placeholder="请输入缴费金额"></Input>
+          <Input
+            type="number"
+            number
+            v-model="formValidate.amount"
+            style="width: 300px"
+            placeholder="请输入缴费金额"
+          ></Input>
         </FormItem>
       </Form>
       <Upload
@@ -43,7 +54,8 @@
 <script>
 export default {
   props: {
-    mail: String
+    mail: String,
+    logo: String
   },
   components: {},
   data() {
@@ -65,7 +77,7 @@ export default {
       formValidate: {
         mail: this.mail,
         history_id: "",
-        amount: 0,
+        amount: 0.0,
         file: []
       },
       ruleValidate: {
@@ -86,6 +98,7 @@ export default {
         ],
         amount: [
           {
+            type: "number",
             required: true,
             message: "The amount cannot be empty",
             trigger: "blur"
@@ -164,7 +177,11 @@ export default {
       });
     }
   },
-  computed: {},
+  computed: {
+    maildisabledflag: function() {
+      return this.logo == "false";
+    }
+  },
   mounted() {}
 };
 </script>

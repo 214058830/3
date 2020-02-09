@@ -8,26 +8,18 @@
               <Icon type="document-text"></Icon>查询余额
             </Menu-item>
           </Menu-group>
-          <Menu-group title="水利信息更改" v-if="this.logo == 'true'">
+          <Menu-group title="水利信息更改">
             <Menu-item name="s2-1">
               <Icon type="heart"></Icon>录入信息
             </Menu-item>
-            <Menu-item name="s2-2">
+            <Menu-item name="s2-2" v-if="this.logo == 'true'">
               <Icon type="heart-broken"></Icon>修改信息
             </Menu-item>
           </Menu-group>
         </Menu>
       </Col>
       <Col span="18">
-        <div v-show="MenuItem == 's1-1'">
-          <router-view :logo="logo" :mail="mail" :flag="flag" />
-        </div>
-        <div v-show="MenuItem == 's2-1'">
-          <AddInfo :mail="mail" />
-        </div>
-        <div v-show="MenuItem == 's2-2'">
-          <router-view />
-        </div>
+        <router-view :logo="logo" :mail="mail" :flag="flag" />
       </Col>
     </Row>
   </div>
@@ -54,6 +46,8 @@ export default {
       this.MenuItem = name;
       if (this.MenuItem == "s1-1") {
         this.$router.push({ path: "/water/query_amount" });
+      } else if (this.MenuItem == "s2-1") {
+        this.$router.push({ path: "/water/add_info" });
       } else if (this.MenuItem == "s2-2") {
         this.$router.push({ path: "/water/alter" });
       }
