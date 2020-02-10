@@ -56,7 +56,8 @@ export default {
         },
         {
           title: "时间",
-          key: "create_time"
+          key: "create_time",
+          width: "220px"
         },
         {
           title: "Action",

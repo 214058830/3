@@ -1,35 +1,39 @@
 <template>
-  <div class="layout-content" style="margin-left: 40px">
-    <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
-      <FormItem label="用户名" prop="name">
-        <Input v-model="formValidate.name" style="width: 300px" placeholder="请输入用户名"></Input>
-        <span class="layout_description">只能包含大小写字母、数字和下划线(最多12字符)</span>
-      </FormItem>
-      <FormItem label="邮箱" prop="mail">
-        <Input v-model="formValidate.mail" style="width: 300px" placeholder="请输入Email"></Input>
-        <span class="layout_description">邮箱是账号唯一的凭证，只能设置一次。</span>
-      </FormItem>
-      <FormItem label="密码" prop="password">
-        <Input
-          v-model="formValidate.password"
-          type="password"
-          style="width: 300px"
-          placeholder="请输入密码"
-        ></Input>
-      </FormItem>
-      <FormItem label="确认密码" prop="password_sure">
-        <Input
-          v-model="formValidate.password_sure"
-          type="password"
-          style="width: 300px"
-          placeholder="请再次确认密码"
-        ></Input>
-      </FormItem>
-      <FormItem>
-        <Button type="primary" @click="register('formValidate')" style="margin-left: 50px">录入</Button>
-        <Button @click="handleReset('formValidate')" style="margin-left: 10px">清空</Button>
-      </FormItem>
-    </Form>
+  <!-- <div class="layout-content" style="margin-left: 40px"> -->
+  <div>
+    <Card>
+      <p slot="title">录入用户信息</p>
+      <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="120">
+        <FormItem label="用户名" prop="name">
+          <Input v-model="formValidate.name" style="width: 300px" placeholder="请输入用户名"></Input>
+          <span class="layout_description">只能包含大小写字母、数字和下划线(最多12字符)</span>
+        </FormItem>
+        <FormItem label="邮箱" prop="mail">
+          <Input v-model="formValidate.mail" style="width: 300px" placeholder="请输入Email"></Input>
+          <span class="layout_description">邮箱是账号唯一的凭证，只能设置一次。</span>
+        </FormItem>
+        <FormItem label="密码" prop="password">
+          <Input
+            v-model="formValidate.password"
+            type="password"
+            style="width: 300px"
+            placeholder="请输入密码"
+          ></Input>
+        </FormItem>
+        <FormItem label="确认密码" prop="password_sure">
+          <Input
+            v-model="formValidate.password_sure"
+            type="password"
+            style="width: 300px"
+            placeholder="请再次确认密码"
+          ></Input>
+        </FormItem>
+      </Form>
+    </Card>
+    <div class="button">
+      <Button type="primary" @click="register('formValidate')" style="margin-left: 50px">录入</Button>
+      <Button @click="handleReset('formValidate')" style="margin-left: 10px">清空</Button>
+    </div>
   </div>
 </template>
 
@@ -161,5 +165,9 @@ export default {
   border-radius: 4px;
   margin-left: 100px;
   margin-right: 100px;
+}
+.button {
+  text-align: center;
+  margin-top: 30px;
 }
 </style>

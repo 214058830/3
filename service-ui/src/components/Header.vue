@@ -8,7 +8,7 @@
       style="height: 90px; line-height:90px"
     >
       <div class="layout-menu">
-        <Menu-item name="logo" to="/">
+        <Menu-item name="image" to="/">
           <img src="../assets/logo.png" style="transform: translateY(+25%);" />
         </Menu-item>
         <Menu-item name="home" to="/">首页</Menu-item>
@@ -25,7 +25,6 @@
         >
           <div class="layout-center" @click="handleOpenAndClose">
             你好， {{ this.mail }}
-            <!-- <Icon type="arrow-down-b"></Icon> -->
             <Icon type="ios-arrow-up" v-if="this.visible" />
             <Icon type="ios-arrow-down" v-else />
           </div>
@@ -77,7 +76,12 @@ export default {
       this.$router.push({ path: "/center" });
     },
     updataActiveMenu(name) {
-      sessionStorage.activemenu = name;
+      if (name == "image") {
+        sessionStorage.activemenu = "home";
+        this.$forceUpdate();
+      } else {
+        sessionStorage.activemenu = name;
+      }
     },
     init() {
       if (sessionStorage.activemenu == undefined) {

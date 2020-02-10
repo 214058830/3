@@ -6,8 +6,12 @@ import iView from 'iview'; // 导入iview库
 import 'iview/dist/styles/iview.css'; // 导入iview样式
 import axios from 'axios' // 导入axios
 import Qs from 'qs'
+import ViewUI from 'view-design'; // 修改主题颜色
+import '../my_theme/index.less'; // 修改主题颜色
 
+// Vue.forceUpdate() // 组件强制渲染 this.$forceUpdate()
 Vue.config.productionTip = false
+Vue.use(ViewUI);
 Vue.use(iView);
 Vue.prototype.axios = axios;
 Vue.prototype.qs = Qs;

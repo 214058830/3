@@ -30,12 +30,12 @@
           <p slot="title">
             <Icon type="ios-person" size="20" />第三方账号登录
           </p>
-          <Button type="success" long>
+          <Button type="warning" long>
             <Icon type="logo-github" />GitHub
           </Button>
           <br />
           <br />
-          <Button type="success" long>
+          <Button type="warning" long>
             <Icon type="logo-github" />Gitea
           </Button>
         </Card>

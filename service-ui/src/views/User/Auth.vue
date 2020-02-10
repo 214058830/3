@@ -9,7 +9,7 @@
       clearable
       @on-change="search"
     />
-    <Table border ref="table" :columns="columns" :data="data" style="margin-left: -8px"></Table>
+    <Table border ref="table" :columns="columns" :data="data"></Table>
     <Button style="float: right" type="primary" size="large" @click="exportData()">
       <Icon type="ios-download-outline"></Icon>Export source data
     </Button>
@@ -53,13 +53,14 @@ export default {
         },
         {
           title: "注册时间",
-          key: "create_time"
+          key: "create_time",
+          width: "220px"
         },
         {
           title: "Action",
           key: "action",
           align: "center",
-          width: 120,
+          width: "130",
           render: (h, params) => {
             return h("div", [
               h(
