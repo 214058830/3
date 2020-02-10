@@ -2,14 +2,14 @@
   <div class="layout">
     <Menu
       mode="horizontal"
+      @on-select="updataActiveMenu"
       :theme="theme"
       :active-name="activemenu"
-      style="height: 90px; 
-      line-height:90px"
+      style="height: 90px; line-height:90px"
     >
       <div class="layout-menu">
         <Menu-item name="logo" to="/">
-          <img style="margin-top: 20px" src="../assets/logo.png" />
+          <img src="../assets/logo.png" style="transform: translateY(+25%);" />
         </Menu-item>
         <Menu-item name="home" to="/">首页</Menu-item>
         <Menu-item name="water" to="/water">水利信息系统</Menu-item>
@@ -58,8 +58,8 @@ export default {
   data() {
     return {
       visible: false, // 子菜单开关
-      activemenu: "water", // 默认激活子菜单
-      theme: "primary" // 导航栏主题色彩
+      activemenu: sessionStorage.activemenu, // 默认激活子菜单
+      theme: "light" // 导航栏主题色彩
     };
   },
   methods: {
@@ -68,17 +68,29 @@ export default {
       this.visible = !this.visible;
     },
     logout() {
+      this.handleOpenAndClose();
       this.$emit("logout", "false");
       this.$router.push({ path: "/" });
     },
     center() {
       this.handleOpenAndClose();
       this.$router.push({ path: "/center" });
+    },
+    updataActiveMenu(name) {
+      sessionStorage.activemenu = name;
+    },
+    init() {
+      if (sessionStorage.activemenu == undefined) {
+        sessionStorage.activemenu = "home";
+        this.activemenu = sessionStorage.activemenu;
+      }
     }
   },
   watch: {},
   computed: {},
-  mounted() {}
+  mounted() {
+    this.init();
+  }
 };
 </script>
 
@@ -97,6 +109,5 @@ export default {
 }
 .layout-center {
   font-size: 16px;
-  color: white;
 }
 </style>

@@ -113,17 +113,32 @@ export default {
   },
   methods: {
     initAllUserAmount() {
+      const msg = this.$Message.loading({
+        content: "Loading...",
+        duration: 0
+      });
       this.axios
         .get(
           process.env.VUE_APP_BASE_URL +
             process.env.VUE_APP_VERSION +
             "/water/amount"
         )
-        .then(response => {
-          this.user_amount = response.data;
-          this.initTable(1, 10, this.user_amount.length);
-          this.updataTable(); // 请求完数据后刷新自动表格数据
-        });
+        .then(
+          response => {
+            setTimeout(msg, 0);
+            if (response.data.code == 2000) {
+              this.user_amount = response.data.data;
+              this.initTable(1, 10, this.user_amount.length);
+              this.updataTable(); // 请求完数据后刷新自动表格数据
+            } else {
+              this.$Message.warning(response.data.msg);
+            }
+          },
+          res => {
+            setTimeout(msg, 0);
+            this.$Message.warning("获取数据失败，请刷新或重试。");
+          }
+        );
     },
     exportData() {
       this.$refs.table.exportCsv({

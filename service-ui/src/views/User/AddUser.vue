@@ -125,11 +125,11 @@ export default {
                 setTimeout(msg, 0);
                 let data = res.data;
                 if (data.code == 2000) {
+                  this.handleReset("formValidate");
                   this.$Message.success("录入成功");
                 } else {
                   this.$Message.warning("录入失败，" + data.msg);
                 }
-                console.log(res.data); // res 返回的是传出的参数
               },
               res => {
                 setTimeout(msg, 0);

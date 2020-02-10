@@ -100,11 +100,26 @@ export default {
   },
   methods: {
     initAllUserInfo() {
-      this.axios.get("http://localhost:8081/v1/user").then(response => {
-        this.user = response.data;
-        this.initTable(1, 10, this.user.length);
-        this.updataTable(); // 请求完数据后刷新自动表格数据
+      const msg = this.$Message.loading({
+        content: "Loading...",
+        duration: 0
       });
+      this.axios.get("http://localhost:8081/v1/user").then(
+        response => {
+          setTimeout(msg, 0);
+          if (response.data.code != 2000) {
+            this.$Message.warning(response.data.msg);
+          } else {
+            this.user = response.data.data;
+            this.initTable(1, 10, this.user.length);
+            this.updataTable(); // 请求完数据后刷新自动表格数据
+          }
+        },
+        res => {
+          setTimeout(msg, 0);
+          this.$Message.warning("设置失败，请刷新或重试。");
+        }
+      );
     },
     exportData() {
       this.$refs.table.exportCsv({
@@ -196,7 +211,6 @@ export default {
         )
         .then(
           res => {
-            console.log(res);
             setTimeout(msg, 0);
             if (res.data.code == 2000) {
               this.$Message.success("设置成功");
