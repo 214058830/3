@@ -8,10 +8,8 @@
       style="height: 90px; line-height:90px"
     >
       <div class="layout-menu">
-        <Menu-item name="image" to="/">
-          <img src="../assets/logo.png" style="transform: translateY(+25%);" />
-        </Menu-item>
-        <Menu-item name="home" to="/">首页</Menu-item>
+        <img src="../assets/logo.png" style="transform: translateY(+25%); margin-left: -320px" />
+        <Menu-item style="margin-left: 80px" name="home" to="/">首页</Menu-item>
         <Menu-item name="water" to="/water">水利信息系统</Menu-item>
         <Menu-item name="user" to="/user" v-if="this.logo == 'true'">用户管理</Menu-item>
         <Menu-item name="platform" to="/platform">论坛</Menu-item>
@@ -76,12 +74,7 @@ export default {
       this.$router.push({ path: "/center" });
     },
     updataActiveMenu(name) {
-      if (name == "image") {
-        sessionStorage.activemenu = "home";
-        this.$forceUpdate();
-      } else {
-        sessionStorage.activemenu = name;
-      }
+      sessionStorage.activemenu = name;
     },
     init() {
       if (sessionStorage.activemenu == undefined) {

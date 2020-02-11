@@ -5,7 +5,7 @@
         <Menu :active-name="MenuItem" @on-select="selectMenuItem">
           <Menu-group title="水利信息查询">
             <Menu-item name="s1-1">
-              <Icon type="document-text"></Icon>查询余额
+              <Icon type="document-text"></Icon>余额
             </Menu-item>
           </Menu-group>
           <Menu-group title="水利信息更改">

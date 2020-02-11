@@ -26,8 +26,8 @@
       />
     </div>
     <div v-if="this.logo == 'false'" style="padding: 20px">
-      <Card :bordered="false" style="width: 700px">
-        <p slot="title">账户余额</p>
+      <Card style="width: 700px">
+        <p slot="title">余额</p>
         <p
           slot="extra"
           @click="queryContributeAmount(param)"
@@ -36,10 +36,17 @@
           查看历史账单
           <Icon type="ios-arrow-forward" size="20" />
         </p>
-        <p style="font-size: 18px;">
-          <Icon type="logo-yen" />
-          &nbsp {{this.amount.toFixed(2)}}
-        </p>
+        <Row>
+          <Col span="21">
+            <p style="font-size: 18px;">
+              <Icon type="logo-yen" />
+              &nbsp {{this.amount.toFixed(2)}}
+            </p>
+          </Col>
+          <Col>
+            <Button type="primary">充值</Button>
+          </Col>
+        </Row>
       </Card>
     </div>
   </div>
