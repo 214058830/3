@@ -56,7 +56,8 @@ export default {
   props: {
     flag: String,
     logo: String,
-    mail: String
+    mail: String,
+    paramActiveMenu: String
   },
   data() {
     return {
@@ -89,7 +90,11 @@ export default {
       }
     }
   },
-  watch: {},
+  watch: {
+    paramActiveMenu: function(val) {
+      sessionStorage.activemenu = val;
+    }
+  },
   computed: {},
   mounted() {
     this.init();

@@ -55,6 +55,7 @@ export default {
   },
   mounted() {
     if (this.flag != "true") {
+      this.$emit("updataParamActiveMenu", "login");
       this.$router.replace({ path: "/login" });
     }
   }

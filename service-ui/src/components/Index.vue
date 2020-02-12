@@ -1,9 +1,16 @@
 <template>
   <div>
-    <Header :flag="flag" :logo="logo" :mail="mail" @logout="logout" />
+    <Header
+      :flag="flag"
+      :logo="logo"
+      :mail="mail"
+      :paramActiveMenu="paramActiveMenu"
+      @logout="logout"
+    />
     <router-view
       @changeFlag="updataFlag"
       @updataUserInfo="updataUserInfo"
+      @updataParamActiveMenu="updataParamActiveMenu"
       :id="id"
       :username="username"
       :password="password"
@@ -27,6 +34,7 @@ export default {
   },
   data() {
     return {
+      paramActiveMenu: "", // 传递给header的参数 代表重定向，让header栏重新更新值
       flag: sessionStorage.flag, // 标记用户是否登录
       logo: sessionStorage.logo, // 管理员标志
       id: sessionStorage.id,
@@ -67,6 +75,9 @@ export default {
         this.updataUserInfo(item, "");
       });
       this.updataFlag(flag);
+    },
+    updataParamActiveMenu(val) {
+      this.paramActiveMenu = val;
     }
   }
 };
