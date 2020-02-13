@@ -1,5 +1,5 @@
 <template>
-  <div class="layout-content">
+  <div>
     <Row>
       <Col span="6">
         <Menu :active-name="MenuItem" @on-select="selectMenuItem">
@@ -51,13 +51,4 @@ export default {
 </script>
 
 <style scoped>
-.layout-content {
-  min-height: 200px;
-  margin: 15px;
-  overflow: hidden;
-  background: #fff;
-  border-radius: 4px;
-  margin-left: 100px;
-  margin-right: 100px;
-}
 </style>

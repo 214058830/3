@@ -84,7 +84,7 @@ export default {
       sessionStorage.activemenu = name;
     },
     init() {
-      if (sessionStorage.activemenu == "") {
+      if (sessionStorage.activemenu == undefined) {
         sessionStorage.activemenu = "home";
         this.activemenu = sessionStorage.activemenu;
       }

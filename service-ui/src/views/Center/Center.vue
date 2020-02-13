@@ -1,5 +1,5 @@
 <template>
-  <div class="layout-content">
+  <div>
     <Card>
       <p slot="title">个人中心</p>
       <div class="layout_register">
@@ -111,14 +111,5 @@ export default {
 <style scoped>
 .layout_register {
   margin-left: 360px;
-}
-.layout-content {
-  min-height: 200px;
-  margin: 15px;
-  overflow: hidden;
-  background: #fff;
-  border-radius: 4px;
-  margin-left: 100px;
-  margin-right: 100px;
 }
 </style>

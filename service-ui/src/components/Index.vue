@@ -9,6 +9,7 @@
       @logout="logout"
     />
     <router-view
+      class="layout-content"
       @changeFlag="updataFlag"
       @updataUserInfo="updataUserInfo"
       @updataParamActiveMenu="updataParamActiveMenu"
@@ -89,3 +90,15 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.layout-content {
+  min-height: 200px;
+  margin: 15px;
+  overflow: hidden;
+  background: #fff;
+  border-radius: 4px;
+  margin-left: 100px;
+  margin-right: 100px;
+}
+</style>

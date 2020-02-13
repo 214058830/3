@@ -1,5 +1,5 @@
 <template>
-  <div class="layout-content">
+  <div>
     <Row>
       <Col span="18" style="padding:10px;">
         <Card>
@@ -138,9 +138,6 @@ export default {
             this.formValidate.single = data.data.Single;
           }
         });
-    },
-    fff() {
-      console.log("11111");
     }
   },
   mounted() {
@@ -152,14 +149,5 @@ export default {
 <style scoped>
 .layout_register {
   margin-left: 180px;
-}
-.layout-content {
-  min-height: 200px;
-  margin: 15px;
-  overflow: hidden;
-  background: #fff;
-  border-radius: 4px;
-  margin-left: 100px;
-  margin-right: 100px;
 }
 </style>
