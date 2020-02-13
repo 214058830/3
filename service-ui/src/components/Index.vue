@@ -1,6 +1,7 @@
 <template>
   <div>
     <Header
+      :key="menuKey"
       :flag="flag"
       :logo="logo"
       :mail="mail"
@@ -34,6 +35,7 @@ export default {
   },
   data() {
     return {
+      menuKey: true,
       paramActiveMenu: "", // 传递给header的参数 代表重定向，让header栏重新更新值
       flag: sessionStorage.flag, // 标记用户是否登录
       logo: sessionStorage.logo, // 管理员标志
@@ -78,6 +80,10 @@ export default {
     },
     updataParamActiveMenu(val) {
       this.paramActiveMenu = val;
+      this.$nextTick(() => {
+        this.menuKey = !this.menuKey;
+        this.paramActiveMenu = "";
+      });
     }
   }
 };

@@ -53,10 +53,11 @@ export default {
       }
     }
   },
-  mounted() {
+  mounted() {},
+  created() {
     if (this.flag != "true") {
       this.$emit("updataParamActiveMenu", "login");
-      this.$router.replace({ path: "/login" });
+      this.$router.push({ path: "/login" });
     }
   }
 };
