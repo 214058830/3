@@ -91,6 +91,7 @@ export default {
     }
   },
   watch: {
+    // 更新本地sessionStorage
     paramActiveMenu: function(val) {
       sessionStorage.activemenu = val;
     }

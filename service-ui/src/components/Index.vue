@@ -78,6 +78,7 @@ export default {
       });
       this.updataFlag(flag);
     },
+    // 组件调用路由够 执行该函数 传递导航栏的参数并刷新导航栏组件
     updataParamActiveMenu(val) {
       this.paramActiveMenu = val;
       this.$nextTick(() => {
