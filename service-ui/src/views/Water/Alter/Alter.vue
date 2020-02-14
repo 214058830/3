@@ -5,7 +5,7 @@
       enter-button
       v-model="searchContent"
       style="width: 400px"
-      placeholder="可输入邮箱、用户名、关键字进行搜索"
+      placeholder="可输入邮箱、用户名、时间关键字进行搜索"
       clearable
       @on-change="search"
     />
@@ -131,14 +131,19 @@ export default {
       this.updataTable();
     },
     search() {
-      this.data = this.user_contribute_amount.filter(d => {
-        return (
-          d.user_name.indexOf(this.searchContent) > -1 ||
-          d.mail.indexOf(this.searchContent) > -1 ||
-          d.create_time.indexOf(this.searchContent) > -1
-        );
-      });
-      this.initTable(1, 10, this.data.length);
+      if (this.searchContent == "") {
+        this.initTable(1, 10, this.user_contribute_amount.length);
+        this.updataTable();
+      } else {
+        this.data = this.user_contribute_amount.filter(d => {
+          return (
+            d.user_name.indexOf(this.searchContent) > -1 ||
+            d.mail.indexOf(this.searchContent) > -1 ||
+            d.create_time.indexOf(this.searchContent) > -1
+          );
+        });
+        this.initTable(1, 10, this.data.length);
+      }
     },
     initTable(num, size, total) {
       this.page.number = num;

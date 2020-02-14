@@ -1,6 +1,15 @@
 <template>
   <Row>
     <Col span="18" style="padding:10px;">
+      <Input
+        search
+        enter-button
+        v-model="searchContent"
+        style="width: 300px"
+        placeholder="搜索"
+        clearable
+        @on-change="search"
+      />
       <Card style="margin-top: 10px">
         <List>
           <ListItem v-for="(val, key) in data">
@@ -117,6 +126,7 @@
 export default {
   data() {
     return {
+      searchContent: "",
       page: {
         number: 1,
         size: 10,
@@ -127,6 +137,21 @@ export default {
     };
   },
   methods: {
+    search() {
+      if (this.searchContent == "") {
+        this.initTable(1, 10, this.forumArticle.length);
+        this.updataTable();
+      } else {
+        this.data = this.forumArticle.filter(d => {
+          return (
+            d.user_name.indexOf(this.searchContent) > -1 ||
+            d.title.indexOf(this.searchContent) > -1 ||
+            d.create_time.indexOf(this.searchContent) > -1
+          );
+        });
+        this.initTable(1, 10, this.data.length);
+      }
+    },
     changePageNumber(num) {
       this.page.number = num;
       this.updataTable();

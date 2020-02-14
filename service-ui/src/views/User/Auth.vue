@@ -179,15 +179,20 @@ export default {
       this.updataTable();
     },
     search() {
-      this.data = this.user.filter(d => {
-        return (
-          d.user_name.indexOf(this.searchContent) > -1 ||
-          d.mail.indexOf(this.searchContent) > -1 ||
-          String(d.logo).indexOf(this.searchContent) > -1 ||
-          d.create_time.indexOf(this.searchContent) > -1
-        );
-      });
-      this.initTable(1, 10, this.data.length);
+      if (this.searchContent == "") {
+        this.initTable(1, 10, this.user.length);
+        this.updataTable();
+      } else {
+        this.data = this.user.filter(d => {
+          return (
+            d.user_name.indexOf(this.searchContent) > -1 ||
+            d.mail.indexOf(this.searchContent) > -1 ||
+            String(d.logo).indexOf(this.searchContent) > -1 ||
+            d.create_time.indexOf(this.searchContent) > -1
+          );
+        });
+        this.initTable(1, 10, this.data.length);
+      }
     },
     initTable(num, size, total) {
       this.page.number = num;

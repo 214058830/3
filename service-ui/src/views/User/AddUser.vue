@@ -31,8 +31,8 @@
       </Form>
     </Card>
     <div class="button">
-      <Button type="primary" @click="register('formValidate')" style="margin-left: 50px">录入</Button>
-      <Button @click="handleReset('formValidate')" style="margin-left: 10px">清空</Button>
+      <Button type="primary" @click="handleReset('formValidate')">清空</Button>
+      <Button style="margin-left: 10px" type="primary" @click="register('formValidate')">录入</Button>
     </div>
   </div>
 </template>
