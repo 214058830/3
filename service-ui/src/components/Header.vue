@@ -24,7 +24,7 @@
                 <Icon type="ios-notifications-outline" size="18" />
               </a>
               <DropdownMenu slot="list">
-                <DropdownItem>公告</DropdownItem>
+                <DropdownItem>公告&nbsp;(3)</DropdownItem>
               </DropdownMenu>
             </Dropdown>
             <Dropdown style="width: 190px" @on-click="mail_drop">
