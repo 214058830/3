@@ -5,7 +5,7 @@
       @on-select="updataActiveMenu"
       :theme="theme"
       :active-name="activemenu"
-      style="height: 90px; line-height:90px"
+      style="height: 80px; line-height:80px"
     >
       <Row>
         <Col span="1">
@@ -18,30 +18,30 @@
             <Menu-item name="user" to="/user" v-if="this.logo == 'true'">用户管理</Menu-item>
             <Menu-item name="platform" to="/platform">论坛</Menu-item>
           </div>
-          <div class="layout-registered" v-if="this.flag === 'true'">
-            <Dropdown
-              trigger="custom"
-              :visible="visible"
-              style="margin-right: 20px; cursor:pointer"
-              placement="bottom-end"
-            >
-              <div class="layout-center" @click="handleOpenAndClose">
-                你好， {{ this.mail }}
-                <Icon type="ios-arrow-up" v-if="this.visible" />
-                <Icon type="ios-arrow-down" v-else />
-              </div>
-              <Dropdown-menu slot="list" style="width: 240px; margin-left: 30px">
-                <div style="height: 50px; margin-top: -10px" @click="center">
-                  <Avatar icon="ios-person" size="small" />&thinsp; 个人中心
-                </div>
-                <div style="height: 60px; font-size: 16px" @click="logout">
-                  退出
-                  <Icon size="20" type="ios-power" style="margin-left: 150px" />
-                </div>
-              </Dropdown-menu>
-            </Dropdown>
+          <div class="layout-center" v-if="this.flag === 'true'">
+            <Submenu name="mail">
+              <template slot="title">
+                <span style="font-size: 16px;">你好， {{ this.mail }}</span>
+              </template>
+              <MenuItem id="layout-menuItem" name="center" to="/center">
+                <Icon type="ios-contact-outline" size="18" />&nbsp;个人中心
+              </MenuItem>
+              <MenuItem id="layout-menuItem" name="logout" @click.native="logout">
+                <Icon type="ios-log-out" size="18" />&nbsp;退出
+              </MenuItem>
+              <hr
+                style="border: 1 dashed #987cb9;"
+                width="90%"
+                align="center"
+                color="#e8eaec"
+                size="1"
+              />
+              <MenuItem id="layout-menuItem" name="3-4">
+                <Icon type="ios-create-outline" size="18" />&nbsp;发帖
+              </MenuItem>
+            </Submenu>
           </div>
-          <div class="layout-registered" v-else>
+          <div class="layout-center" v-else>
             <Menu-item name="register" to="/register">注册</Menu-item>
             <Menu-item name="login" to="/login">登录</Menu-item>
           </div>
@@ -61,24 +61,14 @@ export default {
   },
   data() {
     return {
-      visible: false, // 子菜单开关
       activemenu: sessionStorage.activemenu, // 默认激活子菜单
       theme: "light" // 导航栏主题色彩
     };
   },
   methods: {
-    // 控制个人中心菜单
-    handleOpenAndClose() {
-      this.visible = !this.visible;
-    },
     logout() {
-      this.handleOpenAndClose();
       this.$emit("logout", "false");
       this.$router.push({ path: "/" });
-    },
-    center() {
-      this.handleOpenAndClose();
-      this.$router.push({ path: "/center" });
     },
     updataActiveMenu(name) {
       sessionStorage.activemenu = name;
@@ -112,11 +102,12 @@ export default {
   float: left;
   margin-left: 180px;
 }
-.layout-registered {
+.layout-center {
   float: right;
   margin-right: 100px;
 }
-.layout-center {
-  font-size: 16px;
+#layout-menuItem {
+  height: 40px;
+  margin-left: 8px;
 }
 </style>

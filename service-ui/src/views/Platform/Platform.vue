@@ -60,7 +60,7 @@
         />
       </div>
     </Col>
-    <Col span="6" style="padding:10px; ">
+    <Col span="6" style="padding:10px; margin-top: 30px">
       <Card style="margin-top: 10px">
         <p slot="title">统计信息</p>
         <ul class="list-unstyled">
