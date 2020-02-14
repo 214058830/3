@@ -15,13 +15,13 @@
           <Input v-model="formValidate.history_id" style="width: 300px" placeholder="请输入缴费账单号"></Input>
         </FormItem>
         <FormItem label="缴费金额" prop="amount">
-          <Input
-            type="number"
-            number
-            v-model="formValidate.amount"
+          <InputNumber
+            :max="99999.99"
             style="width: 300px"
-            placeholder="请输入缴费金额"
-          ></Input>
+            :precision="2"
+            :step="1.00"
+            v-model="formValidate.amount"
+          ></InputNumber>
         </FormItem>
       </Form>
       <Upload
@@ -59,16 +59,6 @@ export default {
   },
   components: {},
   data() {
-    const validateAmount = (rule, value, callback) => {
-      setTimeout(() => {
-        var pattern = /^\d+.?\d{0,2}$/;
-        if (value > 214748) {
-          return callback(new Error("销售报价金额过大"));
-        } else if (value <= 214748 && !pattern.test(value)) {
-          return callback(new Error("小数点后最多只能输入两位"));
-        } else return callback();
-      }, 1000);
-    };
     return {
       uploadUrl:
         process.env.VUE_APP_BASE_URL +
@@ -95,15 +85,6 @@ export default {
             message: "The account number cannot be empty",
             trigger: "blur"
           }
-        ],
-        amount: [
-          {
-            type: "number",
-            required: true,
-            message: "The amount cannot be empty",
-            trigger: "blur"
-          },
-          { required: true, validator: validateAmount, trigger: "change" }
         ]
       }
     };

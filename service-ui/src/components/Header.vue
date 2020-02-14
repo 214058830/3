@@ -19,27 +19,34 @@
             <Menu-item name="platform" to="/platform">论坛</Menu-item>
           </div>
           <div class="layout-center" v-if="this.flag === 'true'">
-            <Submenu name="mail">
-              <template slot="title">
-                <span style="font-size: 16px;">你好， {{ this.mail }}</span>
-              </template>
-              <MenuItem id="layout-menuItem" name="center" to="/center">
-                <Icon type="ios-contact-outline" size="18" />&nbsp;个人中心
-              </MenuItem>
-              <MenuItem id="layout-menuItem" name="logout" @click.native="logout">
-                <Icon type="ios-log-out" size="18" />&nbsp;退出
-              </MenuItem>
-              <hr
-                style="border: 1 dashed #987cb9;"
-                width="90%"
-                align="center"
-                color="#e8eaec"
-                size="1"
-              />
-              <MenuItem id="layout-menuItem" name="3-4">
-                <Icon type="ios-create-outline" size="18" />&nbsp;发帖
-              </MenuItem>
-            </Submenu>
+            <Dropdown style="margin-right: 20px" @on-click="mail_drop">
+              <a href="javascript:void(0)">
+                <Icon type="ios-notifications-outline" size="18" />
+              </a>
+              <DropdownMenu slot="list">
+                <DropdownItem>公告</DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+            <Dropdown style="width: 190px" @on-click="mail_drop">
+              <a style="font-size: 16px;" href="javascript:void(0)">
+                你好，{{this.mail}}
+                <Icon type="ios-arrow-down" size="18" />
+              </a>
+              <DropdownMenu slot="list">
+                <DropdownItem name="center" id="layout-dropdownItem">
+                  <Icon type="ios-contact-outline" size="18" />&nbsp;个人中心
+                </DropdownItem>
+                <DropdownItem name="logout" id="layout-dropdownItem">
+                  <Icon type="ios-log-out" size="18" />&nbsp;退出
+                </DropdownItem>
+                <DropdownItem divided name="article" id="layout-dropdownItem">
+                  <Icon type="ios-image-outline" size="18" />&nbsp;我的帖子
+                </DropdownItem>
+                <DropdownItem name="create_article" id="layout-dropdownItem">
+                  <Icon type="ios-create-outline" size="18" />&nbsp;发帖
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
           </div>
           <div class="layout-center" v-else>
             <Menu-item name="register" to="/register">注册</Menu-item>
@@ -72,6 +79,20 @@ export default {
     },
     updataActiveMenu(name) {
       sessionStorage.activemenu = name;
+    },
+    mail_drop(name) {
+      if (name == "center") {
+        this.$router.push({ path: "/center" });
+      } else if (name == "logout") {
+        this.logout();
+      } else if (name == "article") {
+        console.log("chose article");
+      } else {
+        console.log("chose create article");
+      }
+    },
+    message_drop(name) {
+      console.log(name);
     },
     init() {
       if (sessionStorage.activemenu == undefined) {
@@ -106,7 +127,7 @@ export default {
   float: right;
   margin-right: 100px;
 }
-#layout-menuItem {
+#layout-dropdownItem {
   height: 40px;
   margin-left: 8px;
 }
