@@ -105,22 +105,26 @@ export default {
         content: "Loading...",
         duration: 0
       });
-      this.axios.get("http://localhost:8081/v1/user").then(
-        response => {
-          setTimeout(msg, 0);
-          if (response.data.code != 2000) {
-            this.$Message.warning(response.data.msg);
-          } else {
-            this.user = response.data.data;
-            this.initTable(1, 10, this.user.length);
-            this.updataTable(); // 请求完数据后刷新自动表格数据
+      this.axios
+        .get(
+          process.env.VUE_APP_BASE_URL + process.env.VUE_APP_VERSION + "/user"
+        )
+        .then(
+          response => {
+            setTimeout(msg, 0);
+            if (response.data.code != 2000) {
+              this.$Message.warning(response.data.msg);
+            } else {
+              this.user = response.data.data;
+              this.initTable(1, 10, this.user.length);
+              this.updataTable(); // 请求完数据后刷新自动表格数据
+            }
+          },
+          res => {
+            setTimeout(msg, 0);
+            this.$Message.warning("设置失败，请刷新或重试。");
           }
-        },
-        res => {
-          setTimeout(msg, 0);
-          this.$Message.warning("设置失败，请刷新或重试。");
-        }
-      );
+        );
     },
     exportData() {
       this.$refs.table.exportCsv({
