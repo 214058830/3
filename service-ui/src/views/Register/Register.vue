@@ -56,25 +56,21 @@
       </Col>
       <Col span="6" style="padding:10px;">
         <Card>
-          <p slot="title">
-            <Icon type="ios-person" size="20" />第三方账号登录
-          </p>
-          <Button type="success" long>
-            <Icon type="logo-github" />GitHub
-          </Button>
-          <br />
-          <br />
-          <Button type="success" long>
-            <Icon type="logo-github" />Gitea
-          </Button>
+          <p slot="title">第三方登录方式</p>
+          <Row>
+            <Col span="6">
+              <img style="cursor:pointer" src="../../assets/icon32_wx_logo.png" />
+            </Col>
+            <Col span="6">
+              <img style="cursor:pointer" src="../../assets/alipay_logo.png" />
+            </Col>
+          </Row>
         </Card>
         <br />
         <Card>
-          <p slot="title">
-            <Icon type="md-list-box" size="20" />已经有账号了？
-          </p>
-          <li>登录</li>
-          <li>忘记了密码？</li>
+          <p slot="title">已经有账号了？</p>
+          <li style="cursor:pointer" to="/register">登录</li>
+          <li style="cursor:pointer">忘记了密码？</li>
         </Card>
       </Col>
     </Row>
