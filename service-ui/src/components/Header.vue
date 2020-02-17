@@ -27,7 +27,7 @@
                 <DropdownItem>公告&nbsp;(3)</DropdownItem>
               </DropdownMenu>
             </Dropdown>
-            <Dropdown style="width: 190px" @on-click="mail_drop">
+            <Dropdown @on-click="mail_drop">
               <a style="font-size: 16px;" href="javascript:void(0)">
                 你好，{{this.mail}}
                 <Icon type="ios-arrow-down" size="18" />
