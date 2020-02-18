@@ -88,11 +88,8 @@ export default {
       } else if (name == "article") {
         console.log("chose article");
       } else {
-        console.log("chose create article");
+        this.$router.push({ path: "/platform/create_article" });
       }
-    },
-    message_drop(name) {
-      console.log(name);
     },
     init() {
       if (sessionStorage.activemenu == undefined) {

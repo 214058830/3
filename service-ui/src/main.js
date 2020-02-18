@@ -8,12 +8,15 @@ import axios from 'axios' // 导入axios
 import Qs from 'qs'
 import ViewUI from 'view-design'; // 修改主题颜色
 import '../my_theme/index.less'; // 修改主题颜色
+import mavonEditor from 'mavon-editor' // 编辑器
+import 'mavon-editor/dist/css/index.css'
 
 Vue.config.productionTip = false
 Vue.use(ViewUI);
 Vue.use(iView);
 Vue.prototype.axios = axios;
 Vue.prototype.qs = Qs;
+Vue.use(mavonEditor);
 axios.defaults.withCredentials = true // 允许axios跨域请求带cookie
 
 new Vue({

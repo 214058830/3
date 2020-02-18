@@ -16,6 +16,8 @@ import QueryContributeAmount from '../views/Water/Query/QueryContributeAmount.vu
 import AlterContributeAmount from '../views/Water/Alter/AlterContributeAmount.vue'
 import Alter from '../views/Water/Alter/Alter.vue'
 import AddInfo from '../views/Water/AddInfo/AddInfo.vue'
+import CreateArticle from '../views/Platform/CreateArticle/CreateArticle.vue'
+import PlatformIndex from '../views/Platform/Index/Index.vue'
 
 Vue.use(VueRouter)
 
@@ -86,7 +88,20 @@ const routes = [
       {
         path: '/platform',
         name: 'platform',
-        component: Platform
+        component: Platform,
+        redirect: '/platform/index',
+        children: [
+          {
+            path: 'index',
+            name: 'PlatformIndex',
+            component: PlatformIndex
+          },
+          {
+            path: 'create_article',
+            name: 'CreateArticle',
+            component: CreateArticle
+          }
+        ]
       },
       {
         path: '/login',

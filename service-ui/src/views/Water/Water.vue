@@ -26,16 +26,12 @@
 </template>
 
 <script>
-import AddInfo from "./AddInfo/AddInfo";
-import Alter from "./Alter/Alter";
-
 export default {
   props: {
     mail: String,
     logo: String,
     flag: String
   },
-  components: { AddInfo, Alter },
   data() {
     return {
       MenuItem: "s1-1"
