@@ -1,10 +1,13 @@
 <template>
-  <router-view />
+  <router-view :username="username" :mail="mail" />
 </template>
 
 <script>
 export default {
-  props: {},
+  props: {
+    username: String,
+    mail: String
+  },
   data() {
     return {};
   },
