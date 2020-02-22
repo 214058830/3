@@ -18,6 +18,7 @@ import Alter from '../views/Water/Alter/Alter.vue'
 import AddInfo from '../views/Water/AddInfo/AddInfo.vue'
 import CreateArticle from '../views/Platform/CreateArticle/CreateArticle.vue'
 import PlatformIndex from '../views/Platform/Index/Index.vue'
+import Browse from '../views/Platform/Browse/Browse.vue'
 
 Vue.use(VueRouter)
 
@@ -100,6 +101,11 @@ const routes = [
             path: 'create_article',
             name: 'CreateArticle',
             component: CreateArticle
+          },
+          {
+            path: 'browse',
+            name: 'browse',
+            component: Browse
           }
         ]
       },

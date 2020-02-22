@@ -16,6 +16,8 @@
             <ListItemMeta
               avatar="https://dev-file.iviewui.com/userinfoPDvn9gKWYihR24SpgC319vXY8qniCqj4/avatar"
               :title="val.title"
+              @click.native="browse(val)"
+              style="cursor:pointer"
             >
               <template slot="description">
                 <div>
@@ -203,6 +205,15 @@ export default {
             this.$Message.warning("获取数据失败，请刷新或重试。");
           }
         );
+    },
+    browse(val) {
+      // 保证用户保存书签的时候可以正确进入
+      this.$router.push({
+        path: "/platform/browse",
+        query: {
+          id: val.id
+        }
+      });
     }
   },
   mounted() {
