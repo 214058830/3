@@ -8,7 +8,8 @@
       </p>
       <p>{{ this.data.content }}</p>
       <div style="margin-top: 20px">
-        <Button @click="release()">点赞</Button>
+        <Button v-if="this.data.forum_article.like_num == 0" @click="like()">点赞</Button>
+        <Button v-else @click="like()">点赞 {{this.data.forum_article.like_num}}</Button>
         <Button style="margin-left: 10px" @click="handleReset()">分享</Button>
       </div>
     </Card>
@@ -21,8 +22,8 @@
         placeholder="想对作者说点什么"
         :autosize="true"
       />
-      <div style="float: right;">
-        <Button @click="release()">点赞</Button>
+      <div style="margin-top: 20px">
+        <Button @click="release()">回复</Button>
       </div>
     </Card>
   </div>
@@ -38,7 +39,8 @@ export default {
       data: {
         forum_article: {},
         content: ""
-      }
+      },
+      likeflag: 0 // 点赞标志
     };
   },
   methods: {
@@ -68,6 +70,9 @@ export default {
             this.$Message.warning("获取数据失败，请刷新或重试。");
           }
         );
+    },
+    like() {
+      this.data.forum_article.like_num++;
     }
   },
   mounted() {

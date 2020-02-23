@@ -68,15 +68,15 @@
         <ul class="list-unstyled">
           <li>
             会员数:
-            <span>123</span> 人
+            <span>{{ this.forum_property.user_num }}</span> 人
           </li>
           <li>
             文章数:
-            <span>234</span> 个
+            <span>{{ this.forum_property.article_num }}</span> 个
           </li>
           <li>
             回复数:
-            <span>345</span> 个
+            <span>{{ this.forum_property.conmment_num }}</span> 个
           </li>
         </ul>
       </Card>
@@ -135,7 +135,8 @@ export default {
         total: 0
       },
       data: [], // 当前页的文章显示
-      forumArticle: []
+      forumArticle: [],
+      forum_property: {}
     };
   },
   methods: {
@@ -206,6 +207,26 @@ export default {
           }
         );
     },
+    initForumProperty() {
+      this.axios
+        .get(
+          process.env.VUE_APP_BASE_URL +
+            process.env.VUE_APP_VERSION +
+            "/forum/property"
+        )
+        .then(
+          response => {
+            if (response.data.code == 2000) {
+              this.forum_property = response.data.data;
+            } else {
+              this.$Message.warning(response.data.msg);
+            }
+          },
+          res => {
+            this.$Message.warning("获取数据失败，请刷新或重试。");
+          }
+        );
+    },
     browse(val) {
       // 保证用户保存书签的时候可以正确进入
       this.$router.push({
@@ -218,6 +239,7 @@ export default {
   },
   mounted() {
     this.initAllForum();
+    this.initForumProperty();
   }
 };
 </script>
