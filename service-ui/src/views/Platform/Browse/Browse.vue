@@ -31,7 +31,9 @@
 
 <script>
 export default {
-  props: {},
+  props: {
+    mail: String
+  },
   data() {
     return {
       length: 1000,
@@ -72,7 +74,37 @@ export default {
         );
     },
     like() {
-      this.data.forum_article.like_num++;
+      if (this.mail == "") {
+        this.$router.replace({ path: "/login" });
+      } else {
+        let req = {
+          article_id: this.data.forum_article.id,
+          like_user_mail: this.mail
+        };
+        this.axios
+          .post(
+            process.env.VUE_APP_BASE_URL +
+              process.env.VUE_APP_VERSION +
+              "/forum/like",
+            req
+          )
+          .then(
+            res => {
+              if (res.data.code == 2000) {
+                if (res.data.data == true) {
+                  this.data.forum_article.like_num++;
+                } else {
+                  this.data.forum_article.like_num--;
+                }
+              } else {
+                this.$Message.warning("失败，" + res.data.msg);
+              }
+            },
+            res => {
+              this.$Message.warning("失败，请刷新或重试。");
+            }
+          );
+      }
     }
   },
   mounted() {

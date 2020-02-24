@@ -33,7 +33,7 @@
             </ListItemMeta>
             <template slot="action">
               <li>
-                <Icon type="ios-star-outline" />
+                <Icon type="ios-share-alt-outline" />
                 {{val.share_num}}
               </li>
               <li>
