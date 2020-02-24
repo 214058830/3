@@ -104,7 +104,6 @@ export default {
             this.$Message.warning("上传文件不能为空");
             return;
           }
-          // 登录的过渡动画
           const msg = this.$Message.loading({
             content: "Loading...",
             duration: 0
