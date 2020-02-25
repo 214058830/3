@@ -16,9 +16,11 @@ import QueryContributeAmount from '../views/Water/Query/QueryContributeAmount.vu
 import AlterContributeAmount from '../views/Water/Alter/AlterContributeAmount.vue'
 import Alter from '../views/Water/Alter/Alter.vue'
 import AddInfo from '../views/Water/AddInfo/AddInfo.vue'
-import CreateArticle from '../views/Platform/CreateArticle/CreateArticle.vue'
+import CreateArticle from '../views/Platform/Edit/CreateArticle.vue'
+import EditArticle from '../views/Platform/Edit/EditArticle.vue'
 import PlatformIndex from '../views/Platform/Index/Index.vue'
 import Browse from '../views/Platform/Browse/Browse.vue'
+import InquireMyArticle from '../views/Platform/Browse/InquireMyArticle.vue'
 
 Vue.use(VueRouter)
 
@@ -106,6 +108,16 @@ const routes = [
             path: 'browse',
             name: 'browse',
             component: Browse
+          },
+          {
+            path: 'inquire_my_article',
+            name: 'InquireMyArticle',
+            component: InquireMyArticle
+          },
+          {
+            path: 'edit_article',
+            name: 'EditArticle',
+            component: EditArticle
           }
         ]
       },

@@ -5,8 +5,13 @@
       <p style=" color: #858585; font-size:14px; margin-top: 20px" slot="title">
         <span style="color: #2db7f5">{{ this.data.forum_article.user_name }}</span>
         <time style="margin-left: 20px">最后发布于{{this.data.forum_article.last_modified_time}}</time>
+        <span
+          v-if="this.mail == this.data.forum_article.mail"
+          style="cursor:pointer; color: #2db7f5; float: right; margin-right: 10px"
+          @click="edit()"
+        >编辑</span>
       </p>
-      <p>{{ this.data.content }}</p>
+      <article v-html="this.data.content"></article>
       <div style="margin-top: 20px">
         <Button v-if="this.data.forum_article.like_num == 0" @click="like()">点赞</Button>
         <Button v-else @click="like()">点赞 {{this.data.forum_article.like_num}}</Button>
@@ -105,6 +110,14 @@ export default {
             }
           );
       }
+    },
+    edit() {
+      this.$router.push({
+        name: "EditArticle",
+        params: {
+          id: this.data.forum_article.id
+        }
+      });
     }
   },
   mounted() {

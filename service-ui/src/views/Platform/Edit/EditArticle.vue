@@ -2,7 +2,11 @@
   <div>
     <Card style="margin-top: 10px">
       <Input v-model="article.title" :maxlength="maxlength" placeholder="请输入文章标题" />
-      <mavon-editor v-model="article.content" style="margin-top: 20px" />
+      <mavon-editor
+        v-model="article.content"
+        style="margin-top: 20px"
+        @change="updataDisplayContent"
+      />
       <div class="button">
         <Button type="primary" @click="release()">发布</Button>
         <Button style="margin-left: 10px" type="primary" @click="handleReset()">清空</Button>
@@ -22,7 +26,8 @@ export default {
       maxlength: 24,
       article: {
         title: "",
-        content: ""
+        content: "",
+        display_content: ""
       }
     };
   },
@@ -33,14 +38,12 @@ export default {
         duration: 0
       });
       let req = this.article;
-      req.username = this.username;
-      req.mail = this.mail;
-
+      req.article_id = this.$route.params.id;
       this.axios
         .post(
           process.env.VUE_APP_BASE_URL +
             process.env.VUE_APP_VERSION +
-            "/forum/release",
+            "/forum/edit",
           req
         )
         .then(
@@ -61,10 +64,40 @@ export default {
         );
     },
     handleReset() {
-      this.article = {};
+      this.article.title = "";
+      this.article.content = "";
+    },
+    updataDisplayContent(value, render) {
+      this.article.display_content = render;
+    },
+    init() {
+      let req = { article_id: this.$route.params.id };
+      this.axios
+        .post(
+          process.env.VUE_APP_BASE_URL +
+            process.env.VUE_APP_VERSION +
+            "/forum/contentById",
+          req
+        )
+        .then(
+          res => {
+            let r = res.data;
+            if (r.code == 2000) {
+              this.article.title = r.data.forum_article.title;
+              this.article.content = r.data.content;
+            } else {
+              this.$Message.warning("获取内容失败，" + r.msg);
+            }
+          },
+          res => {
+            this.$Message.warning("获取内容失败，请刷新或重试。");
+          }
+        );
     }
   },
-  mounted() {}
+  mounted() {
+    this.init();
+  }
 };
 </script>
 

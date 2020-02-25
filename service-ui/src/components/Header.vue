@@ -39,7 +39,7 @@
                 <DropdownItem name="logout" id="layout-dropdownItem">
                   <Icon type="ios-log-out" size="18" />&nbsp;退出
                 </DropdownItem>
-                <DropdownItem divided name="article" id="layout-dropdownItem">
+                <DropdownItem divided name="my_article" id="layout-dropdownItem">
                   <Icon type="ios-image-outline" size="18" />&nbsp;我的帖子
                 </DropdownItem>
                 <DropdownItem name="create_article" id="layout-dropdownItem">
@@ -85,8 +85,8 @@ export default {
         this.$router.push({ path: "/center" });
       } else if (name == "logout") {
         this.logout();
-      } else if (name == "article") {
-        console.log("chose article");
+      } else if (name == "my_article") {
+        this.$router.push({ path: "/platform/inquire_my_article" });
       } else {
         this.$router.push({ path: "/platform/create_article" });
       }
