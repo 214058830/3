@@ -7,7 +7,7 @@
         <a href="https://github.com/214058830">GongBin(Vue + Golang + MySQL)</a>
       </p>
       <br />
-      <p>VERSION: V1.0.0 · 为了更好的体验，本站推荐使用 Chrome 或 Firefox 浏览器</p>
+      <p>VERSION: V1.0.4 · 为了更好的体验，本站推荐使用 Chrome 或 Firefox 浏览器</p>
     </div>
   </div>
 </template>
