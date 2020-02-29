@@ -6,7 +6,8 @@
 export default {
   props: {
     username: String,
-    mail: String
+    mail: String,
+    flag: String
   },
   data() {
     return {};

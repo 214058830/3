@@ -21,14 +21,14 @@
     <Card style="margin-top: 30px">
       <p style=" color: black; font-size:14px; " slot="title">添加一条回复</p>
       <Input
-        v-model="comment"
+        v-model="commentText"
         :maxlength="length"
         type="textarea"
         placeholder="想对作者说点什么"
         :autosize="true"
       />
       <div style="margin-top: 20px">
-        <Button @click="release()">回复</Button>
+        <Button @click="comment()">回复</Button>
       </div>
     </Card>
   </div>
@@ -37,12 +37,13 @@
 <script>
 export default {
   props: {
-    mail: String
+    mail: String,
+    flag: String
   },
   data() {
     return {
       length: 1000,
-      comment: "",
+      commentText: "",
       data: {
         forum_article: {},
         content: ""
@@ -118,6 +119,11 @@ export default {
           id: this.data.forum_article.id
         }
       });
+    },
+    comment() {
+      if (this.flag != true) {
+        this.$router.replace({ path: "/login" });
+      }
     }
   },
   mounted() {
