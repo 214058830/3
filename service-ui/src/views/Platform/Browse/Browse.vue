@@ -121,6 +121,7 @@ export default {
       });
     },
     comment() {
+      // 帖子评论
       if (this.flag != true) {
         this.$router.replace({ path: "/login" });
       }
