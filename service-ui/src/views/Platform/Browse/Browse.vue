@@ -124,6 +124,28 @@ export default {
       // 帖子评论
       if (this.flag != true) {
         this.$router.replace({ path: "/login" });
+      } else {
+        this.axios
+          .get(
+            process.env.VUE_APP_BASE_URL +
+              process.env.VUE_APP_VERSION +
+              "/forum/comment",
+            { params: { id: this.$route.query.id } }
+          )
+          .then(
+            response => {
+              setTimeout(msg, 0);
+              if (response.data.code == 2000) {
+                this.data = response.data.data;
+              } else {
+                this.$Message.warning(response.data.msg);
+              }
+            },
+            res => {
+              setTimeout(msg, 0);
+              this.$Message.warning("获取数据失败，请刷新或重试。");
+            }
+          );
       }
     }
   },
