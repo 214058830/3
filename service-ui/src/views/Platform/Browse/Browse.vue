@@ -30,6 +30,23 @@
       <div style="margin-top: 20px">
         <Button @click="comment()">回复</Button>
       </div>
+      <List style="margin-top: 20px">
+        <ListItem v-for="(val, key) in this.data.comment">
+          <ListItemMeta
+            avatar="https://dev-file.iviewui.com/userinfoPDvn9gKWYihR24SpgC319vXY8qniCqj4/avatar"
+            :title="val.user_name"
+            @click.native="test(val)"
+            style="cursor:pointer"
+          >
+            <template slot="description">
+              <p>{{ val.content }}</p>
+            </template>
+          </ListItemMeta>
+          <template slot="action">
+            <li>{{val.create_time}}</li>
+          </template>
+        </ListItem>
+      </List>
     </Card>
   </div>
 </template>
@@ -42,11 +59,12 @@ export default {
   },
   data() {
     return {
-      length: 1000,
+      length: 64,
       commentText: "",
       data: {
         forum_article: {},
-        content: ""
+        content: "",
+        comment: []
       },
       likeflag: 0 // 点赞标志
     };
@@ -147,6 +165,9 @@ export default {
             }
           );
       }
+    },
+    test(val) {
+      console.log(val);
     }
   },
   mounted() {
