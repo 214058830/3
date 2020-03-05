@@ -10,7 +10,7 @@
     />
     <router-view
       class="layout-content"
-      @changeFlag="updataFlag"
+      @updataFlag="updataFlag"
       @updataUserInfo="updataUserInfo"
       @updataParamActiveMenu="updataParamActiveMenu"
       :id="id"

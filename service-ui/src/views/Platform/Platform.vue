@@ -1,5 +1,5 @@
 <template>
-  <router-view :username="username" :mail="mail" />
+  <router-view :username="username" :mail="mail" :flag="flag" :logo="logo" />
 </template>
 
 <script>
@@ -7,7 +7,8 @@ export default {
   props: {
     username: String,
     mail: String,
-    flag: String
+    flag: String,
+    logo: String
   },
   data() {
     return {};

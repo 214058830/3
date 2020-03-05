@@ -16,6 +16,16 @@
         <Button v-if="this.data.forum_article.like_num == 0" @click="like()">点赞</Button>
         <Button v-else @click="like()">点赞 {{this.data.forum_article.like_num}}</Button>
         <Button style="margin-left: 10px" @click="handleReset()">分享</Button>
+        <Button
+          v-if="this.logo == 'true' && this.data.forum_article.logo == false"
+          style="margin-left: 10px"
+          @click="sticky(true)"
+        >置顶</Button>
+        <Button
+          v-else-if="this.logo == 'true' && this.data.forum_article.logo != false"
+          style="margin-left: 10px"
+          @click="sticky(false)"
+        >取消置顶</Button>
       </div>
     </Card>
     <Card style="margin-top: 30px">
@@ -26,6 +36,7 @@
         type="textarea"
         placeholder="想对作者说点什么"
         :autosize="true"
+        @click.native="clickCommentInput()"
       />
       <div style="margin-top: 20px">
         <Button @click="comment()">回复</Button>
@@ -35,8 +46,6 @@
           <ListItemMeta
             avatar="https://dev-file.iviewui.com/userinfoPDvn9gKWYihR24SpgC319vXY8qniCqj4/avatar"
             :title="val.user_name"
-            @click.native="test(val)"
-            style="cursor:pointer"
           >
             <template slot="description">
               <p>{{ val.content }}</p>
@@ -55,7 +64,8 @@
 export default {
   props: {
     mail: String,
-    flag: String
+    flag: String,
+    logo: String
   },
   data() {
     return {
@@ -140,35 +150,43 @@ export default {
     },
     comment() {
       // 帖子评论
-      if (this.flag != true) {
-        this.$router.replace({ path: "/login" });
+      if (this.commentText == "") {
+        this.$Message.warning("评论内容不能为空");
       } else {
+        let req = {
+          article_id: this.data.forum_article.id,
+          mail: this.mail,
+          comment: this.commentText
+        };
         this.axios
-          .get(
+          .post(
             process.env.VUE_APP_BASE_URL +
               process.env.VUE_APP_VERSION +
               "/forum/comment",
-            { params: { id: this.$route.query.id } }
+            req
           )
           .then(
             response => {
-              setTimeout(msg, 0);
               if (response.data.code == 2000) {
-                this.data = response.data.data;
+                this.commentText = "";
+                this.$Message.success("评论成功");
               } else {
-                this.$Message.warning(response.data.msg);
+                this.$Message.warning("评论失败，" + response.data.msg);
               }
             },
             res => {
-              setTimeout(msg, 0);
               this.$Message.warning("获取数据失败，请刷新或重试。");
             }
           );
       }
     },
-    test(val) {
-      console.log(val);
-    }
+    clickCommentInput() {
+      if (this.flag != "true") {
+        this.$router.replace({ path: "/login" });
+      }
+    },
+    // 置顶操作 参数: bool
+    sticky(flag) {}
   },
   mounted() {
     this.init();

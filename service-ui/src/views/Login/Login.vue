@@ -98,7 +98,7 @@ export default {
             setTimeout(msg, 0);
             if (res.data.code == 2000) {
               this.$Message.success("登录成功");
-              this.$emit("changeFlag", "true");
+              this.$emit("updataFlag", "true");
               const map = new Map([
                 ["id", res.data.data.id],
                 ["mail", res.data.data.mail],
