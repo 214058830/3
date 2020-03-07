@@ -5,15 +5,15 @@
         <Menu :active-name="MenuItem" @on-select="selectMenuItem">
           <Menu-group title="水利信息查询">
             <Menu-item name="s1-1">
-              <Icon type="document-text"></Icon>余额
+              <Icon type="document-text"></Icon>查询
             </Menu-item>
           </Menu-group>
-          <Menu-group title="水利信息更改">
+          <Menu-group title="水利信息更改" v-if="this.logo == 'true'">
             <Menu-item name="s2-1">
-              <Icon type="heart"></Icon>录入信息
+              <Icon type="heart"></Icon>录入
             </Menu-item>
-            <Menu-item name="s2-2" v-if="this.logo == 'true'">
-              <Icon type="heart-broken"></Icon>修改信息
+            <Menu-item name="s2-2">
+              <Icon type="heart-broken"></Icon>修改
             </Menu-item>
           </Menu-group>
         </Menu>

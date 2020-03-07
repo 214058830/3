@@ -1,54 +1,28 @@
 <template>
   <div>
-    <div v-if="this.logo == 'true'">
-      <Input
-        search
-        enter-button
-        v-model="searchContent"
-        style="width: 400px"
-        placeholder="可输入邮箱、用户名的关键字进行搜索"
-        clearable
-        @on-change="search"
-      />
-      <Table border ref="table" :columns="columns" :data="data" style="margin-left: -8px"></Table>
-      <Button style="float: right" type="primary" size="large" @click="exportData()">
-        <Icon type="ios-download-outline"></Icon>Export source data
-      </Button>
-      <Page
-        :total="this.page.total"
-        :current="this.page.number"
-        :page-size="this.page.size"
-        show-sizer
-        show-elevator
-        show-total
-        @on-change="changePageNumber"
-        @on-page-size-change="changePageSize"
-      />
-    </div>
-    <div v-if="this.logo == 'false'" style="padding: 20px">
-      <Card style="width: 700px">
-        <p slot="title">余额</p>
-        <p
-          slot="extra"
-          @click="queryContributeAmount(param)"
-          style="font-size: 16px; cursor: pointer"
-        >
-          查看历史账单
-          <Icon type="ios-arrow-forward" size="20" />
-        </p>
-        <Row>
-          <Col span="21">
-            <p style="font-size: 18px;">
-              <Icon type="logo-yen" />
-              &nbsp {{this.amount.toFixed(2)}}
-            </p>
-          </Col>
-          <Col>
-            <Button type="primary">充值</Button>
-          </Col>
-        </Row>
-      </Card>
-    </div>
+    <Input
+      search
+      enter-button
+      v-model="searchContent"
+      style="width: 400px"
+      placeholder="可输入邮箱、用户名的关键字进行搜索"
+      clearable
+      @on-change="search"
+    />
+    <Table border ref="table" :columns="columns" :data="data" style="margin-left: -8px"></Table>
+    <Button style="float: right" type="primary" size="large" @click="exportData()">
+      <Icon type="ios-download-outline"></Icon>Export source data
+    </Button>
+    <Page
+      :total="this.page.total"
+      :current="this.page.number"
+      :page-size="this.page.size"
+      show-sizer
+      show-elevator
+      show-total
+      @on-change="changePageNumber"
+      @on-page-size-change="changePageSize"
+    />
   </div>
 </template>
 
@@ -72,22 +46,38 @@ export default {
         total: 0
       },
       data: [], // 表格中当前显示的数据
-      user_amount: [], // 所有的总数据
+      water_information: [], // 所有的总数据
       columns: [
         {
-          title: "邮箱",
-          key: "mail"
+          title: "序号",
+          key: "id"
         },
         {
-          title: "用户名",
-          key: "user_name"
+          title: "单位名称",
+          key: "company_name"
         },
         {
-          title: "剩余金额",
-          key: "amount",
-          render: (h, params) => {
-            return h("div", params.row.amount.toFixed(2));
-          }
+          title: "负责人",
+          key: "principal"
+          // render: (h, params) => {
+          //   return h("div", params.row.amount.toFixed(2));
+          // }
+        },
+        {
+          title: "电话",
+          key: "telephone_number"
+        },
+        {
+          title: "传真",
+          key: "fax_number"
+        },
+        {
+          title: "邮编",
+          key: "post_code"
+        },
+        {
+          title: "地址",
+          key: "address"
         },
         {
           title: "Action",
@@ -105,7 +95,7 @@ export default {
                   },
                   on: {
                     click: () => {
-                      this.queryContributeAmount(params.row);
+                      this.queryWaterInformationDetail(params.row);
                     }
                   }
                 },
@@ -119,23 +109,21 @@ export default {
     };
   },
   methods: {
-    initAllUserAmount() {
+    initWaterInformation() {
       const msg = this.$Message.loading({
         content: "Loading...",
         duration: 0
       });
       this.axios
         .get(
-          process.env.VUE_APP_BASE_URL +
-            process.env.VUE_APP_VERSION +
-            "/water/amount"
+          process.env.VUE_APP_BASE_URL + process.env.VUE_APP_VERSION + "/water/"
         )
         .then(
           response => {
             setTimeout(msg, 0);
             if (response.data.code == 2000) {
-              this.user_amount = response.data.data;
-              this.initTable(1, 10, this.user_amount.length);
+              this.water_information = response.data.data;
+              this.initTable(1, 10, this.water_information.length);
               this.updataTable(); // 请求完数据后刷新自动表格数据
             } else {
               this.$Message.warning(response.data.msg);
@@ -158,13 +146,13 @@ export default {
     },
     updataTable() {
       this.data = [];
-      if (this.user_amount.length >= this.page.number * this.page.size) {
-        this.data = this.user_amount.slice(
+      if (this.water_information.length >= this.page.number * this.page.size) {
+        this.data = this.water_information.slice(
           (this.page.number - 1) * this.page.size,
           this.page.number * this.page.size
         );
       } else {
-        this.data = this.user_amount.slice(
+        this.data = this.water_information.slice(
           (this.page.number - 1) * this.page.size
         );
       }
@@ -175,10 +163,10 @@ export default {
     },
     search() {
       if (this.searchContent == "") {
-        this.initTable(1, 10, this.user_amount.length);
+        this.initTable(1, 10, this.water_information.length);
         this.updataTable();
       } else {
-        this.data = this.user_amount.filter(d => {
+        this.data = this.water_information.filter(d => {
           return (
             d.user_name.indexOf(this.searchContent) > -1 ||
             d.mail.indexOf(this.searchContent) > -1
@@ -192,44 +180,41 @@ export default {
       this.page.size = size;
       this.page.total = total;
     },
-    queryContributeAmount(row) {
-      this.$router.push({
-        name: "QueryContributeAmount",
-        params: {
-          mail: row.mail
-        }
-      });
-    },
-    getUserAmount(mail) {
-      // 登录的过渡动画
-      const msg = this.$Message.loading({
-        content: "Loading...",
-        duration: 0
-      });
-      let req = { mail: mail };
-      this.axios
-        .post(
-          process.env.VUE_APP_BASE_URL +
-            process.env.VUE_APP_VERSION +
-            "/water/amount",
-          req
-        )
-        .then(response => {
-          setTimeout(msg, 0);
-          if (response.data.code == "2000") {
-            this.amount = response.data.data.amount;
-          } else {
-            this.$Message.warning("服务器出错，请稍后重试。");
-          }
-        });
+    queryWaterInformationDetail(row) {
+      console.log(row);
+      // this.$router.push({
+      //   name: "QueryContributeAmount",
+      //   params: {
+      //     mail: row.mail
+      //   }
+      // });
     }
+    // getUserAmount(mail) {
+    //   // 登录的过渡动画
+    //   const msg = this.$Message.loading({
+    //     content: "Loading...",
+    //     duration: 0
+    //   });
+    //   let req = { mail: mail };
+    //   this.axios
+    //     .post(
+    //       process.env.VUE_APP_BASE_URL +
+    //         process.env.VUE_APP_VERSION +
+    //         "/water/amount",
+    //       req
+    //     )
+    //     .then(response => {
+    //       setTimeout(msg, 0);
+    //       if (response.data.code == "2000") {
+    //         this.amount = response.data.data.amount;
+    //       } else {
+    //         this.$Message.warning("服务器出错，请稍后重试。");
+    //       }
+    //     });
+    // }
   },
   mounted() {
-    if (this.logo == "true") {
-      this.initAllUserAmount();
-    } else if (this.logo == "false") {
-      this.getUserAmount(this.mail);
-    }
+    this.initWaterInformation();
   }
 };
 </script>
