@@ -134,8 +134,8 @@ export default {
         size: 10,
         total: 0
       },
-      data: [], // 当前页的文章显示
-      forumArticle: [],
+      data: [], // 当前页的帖子
+      forumArticle: [], // 所有的帖子内容
       forum_property: {}
     };
   },

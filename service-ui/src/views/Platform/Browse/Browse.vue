@@ -10,22 +10,22 @@
           style="cursor:pointer; color: #2db7f5; float: right; margin-right: 10px"
           @click="edit()"
         >编辑</span>
+        <span
+          v-if="this.logo == 'true' && this.data.forum_article.logo == false"
+          style="cursor:pointer; color: #2db7f5; float: right; margin-right: 10px"
+          @click="sticky(true)"
+        >置顶</span>
+        <span
+          v-else-if="this.logo == 'true' && this.data.forum_article.logo != false"
+          style="cursor:pointer; color: #2db7f5; float: right; margin-right: 10px"
+          @click="sticky(false)"
+        >取消置顶</span>
       </p>
       <article v-html="this.data.content"></article>
       <div style="margin-top: 20px">
         <Button v-if="this.data.forum_article.like_num == 0" @click="like()">点赞</Button>
         <Button v-else @click="like()">点赞 {{this.data.forum_article.like_num}}</Button>
         <Button style="margin-left: 10px" @click="handleReset()">分享</Button>
-        <Button
-          v-if="this.logo == 'true' && this.data.forum_article.logo == false"
-          style="margin-left: 10px"
-          @click="sticky(true)"
-        >置顶</Button>
-        <Button
-          v-else-if="this.logo == 'true' && this.data.forum_article.logo != false"
-          style="margin-left: 10px"
-          @click="sticky(false)"
-        >取消置顶</Button>
       </div>
     </Card>
     <Card style="margin-top: 30px">
@@ -186,7 +186,31 @@ export default {
       }
     },
     // 置顶操作 参数: bool
-    sticky(flag) {}
+    sticky(flag) {
+      let req = {
+        article_id: this.data.forum_article.id,
+        flag: flag
+      };
+      this.axios
+        .post(
+          process.env.VUE_APP_BASE_URL +
+            process.env.VUE_APP_VERSION +
+            "/forum/sticky",
+          req
+        )
+        .then(
+          response => {
+            if (response.data.code == 2000) {
+              this.data.forum_article.logo = flag;
+            } else {
+              this.$Message.warning("操作失败，" + response.data.msg);
+            }
+          },
+          res => {
+            this.$Message.warning("获取数据失败，请刷新或重试。");
+          }
+        );
+    }
   },
   mounted() {
     this.init();
