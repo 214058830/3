@@ -11,11 +11,11 @@ import Home from '../views/Home/Home.vue'
 import Home_about from '../views/Home/Home_about.vue'
 import Home_index from '../views/Home/Home_index.vue'
 import Center from '../views/Center/Center.vue'
-import QueryAmount from '../views/Water/Query/QueryAmount.vue'
-import QueryContributeAmount from '../views/Water/Query/QueryContributeAmount.vue'
+import WaterInformation from '../views/Water/Query/WaterInformation.vue'
+import WaterInformationDetail from '../views/Water/Query/WaterInformationDetail.vue'
 import AlterContributeAmount from '../views/Water/Alter/AlterContributeAmount.vue'
 import Alter from '../views/Water/Alter/Alter.vue'
-import AddInfo from '../views/Water/AddInfo/AddInfo.vue'
+import AddInfo from '../views/Water/Add/AddInfo.vue'
 import CreateArticle from '../views/Platform/Edit/CreateArticle.vue'
 import EditArticle from '../views/Platform/Edit/EditArticle.vue'
 import PlatformIndex from '../views/Platform/Index/Index.vue'
@@ -54,17 +54,17 @@ const routes = [
         path: 'water',
         name: 'water',
         component: Water,
-        redirect: '/water/query_amount',
+        redirect: '/water/water_information',
         children: [
           {
-            path: 'query_amount',
-            name: 'QueryAmount',
-            component: QueryAmount
+            path: 'water_information',
+            name: 'WaterInformation',
+            component: WaterInformation
           },
           {
-            path: 'query_contribute_amount',
-            name: 'QueryContributeAmount',
-            component: QueryContributeAmount
+            path: 'water_information_detail',
+            name: 'WaterInformationDetail',
+            component: WaterInformationDetail
           },
           {
             path: 'add_info',

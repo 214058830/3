@@ -65,14 +65,11 @@
 
 <script>
 export default {
-  props: {
-    mail: String,
-    logo: String
-  },
+  props: {},
   components: {},
   data() {
     return {
-      introductionInputLength: 64,
+      introductionInputLength: 512,
       levelList: [
         {
           value: "厅属",
@@ -187,7 +184,7 @@ export default {
               setTimeout(msg, 0);
               let data = res.data;
               if (data.code == 2000) {
-                this.$Message.warning("提交成功");
+                this.$Message.success("提交成功");
                 this.handleReset("formData");
               } else {
                 this.$Message.warning("提交失败，" + data.msg);

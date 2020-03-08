@@ -41,7 +41,7 @@ export default {
     selectMenuItem(name) {
       this.MenuItem = name;
       if (this.MenuItem == "s1-1") {
-        this.$router.push({ path: "/water/query_amount" });
+        this.$router.push({ path: "/water/water_information" });
       } else if (this.MenuItem == "s2-1") {
         this.$router.push({ path: "/water/add_info" });
       } else if (this.MenuItem == "s2-2") {

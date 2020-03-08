@@ -181,37 +181,13 @@ export default {
       this.page.total = total;
     },
     queryWaterInformationDetail(row) {
-      console.log(row);
-      // this.$router.push({
-      //   name: "QueryContributeAmount",
-      //   params: {
-      //     mail: row.mail
-      //   }
-      // });
+      this.$router.push({
+        name: "WaterInformationDetail",
+        params: {
+          id: row.detail_id
+        }
+      });
     }
-    // getUserAmount(mail) {
-    //   // 登录的过渡动画
-    //   const msg = this.$Message.loading({
-    //     content: "Loading...",
-    //     duration: 0
-    //   });
-    //   let req = { mail: mail };
-    //   this.axios
-    //     .post(
-    //       process.env.VUE_APP_BASE_URL +
-    //         process.env.VUE_APP_VERSION +
-    //         "/water/amount",
-    //       req
-    //     )
-    //     .then(response => {
-    //       setTimeout(msg, 0);
-    //       if (response.data.code == "2000") {
-    //         this.amount = response.data.data.amount;
-    //       } else {
-    //         this.$Message.warning("服务器出错，请稍后重试。");
-    //       }
-    //     });
-    // }
   },
   mounted() {
     this.initWaterInformation();
