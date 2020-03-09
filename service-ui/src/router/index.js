@@ -13,7 +13,7 @@ import Home_index from '../views/Home/Home_index.vue'
 import Center from '../views/Center/Center.vue'
 import WaterInformation from '../views/Water/Query/WaterInformation.vue'
 import WaterInformationDetail from '../views/Water/Query/WaterInformationDetail.vue'
-import AlterContributeAmount from '../views/Water/Alter/AlterContributeAmount.vue'
+import AlterConfirm from '../views/Water/Alter/AlterConfirm.vue'
 import Alter from '../views/Water/Alter/Alter.vue'
 import AddInfo from '../views/Water/Add/AddInfo.vue'
 import CreateArticle from '../views/Platform/Edit/CreateArticle.vue'
@@ -77,9 +77,9 @@ const routes = [
             component: Alter
           },
           {
-            path: 'alter_contribute_amount',
-            name: 'AlterContributeAmount',
-            component: AlterContributeAmount
+            path: 'alter_confirm',
+            name: 'AlterConfirm',
+            component: AlterConfirm
           }
         ]
       },

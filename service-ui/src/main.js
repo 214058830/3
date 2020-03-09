@@ -26,9 +26,9 @@ new Vue({
 }).$mount('#app')
 
 // 解决Vue-router在3.1之后把$router.push()方法改为了Promise，假如没有回调函数，错误信息就会交给全局的路由错误处理，因此就会报错NavigationDuplicated
-// import Router from 'vue-router'
+import Router from 'vue-router'
 
-// const originalPush = Router.prototype.push
-// Router.prototype.push = function push(location) {
-//   return originalPush.call(this, location).catch(err => err)
-// }
+const originalPush = Router.prototype.push
+Router.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+}

@@ -46,7 +46,7 @@
       >
         <div style="padding: 20px 0">
           <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
-          <p>点击或拖拽文件到这里上传单位图片</p>
+          <p>点击或拖拽文件到这里上传新单位图片</p>
         </div>
       </Upload>
       <Row v-else style="padding: 20px 0; height: 118px; text-align: center; position:relative;">
@@ -58,7 +58,7 @@
     </Card>
     <div class="button">
       <Button type="primary" @click="handleReset('formData')">清空</Button>
-      <Button style="margin-left: 10px" type="primary" @click="submit('formData')">提交</Button>
+      <Button style="margin-left: 10px" type="primary" @click="save('formData')">保存</Button>
     </div>
   </div>
 </template>
@@ -83,7 +83,7 @@ export default {
       uploadUrl:
         process.env.VUE_APP_BASE_URL +
         process.env.VUE_APP_VERSION +
-        "/water/upload",
+        "/water/alter",
       formData: {
         company_name: "",
         principal: "",
@@ -143,7 +143,7 @@ export default {
       this.formData.file = [];
       this.$refs[name].resetFields();
     },
-    submit(name) {
+    save(name) {
       this.$refs[name].validate(valid => {
         if (valid) {
           const msg = this.$Message.loading({
@@ -197,10 +197,44 @@ export default {
           this.$Message.warning("请输入正确的内容");
         }
       });
+    },
+    init() {
+      this.formData.company_name = this.$route.params.company_name;
+      this.formData.principal = this.$route.params.principal;
+      this.formData.telephone_number = this.$route.params.telephone_number;
+      this.formData.fax_number = this.$route.params.fax_number;
+      this.formData.post_code = this.$route.params.post_code;
+      this.formData.address = this.$route.params.address;
+      this.formData.level = this.$route.params.level;
+      this.axios
+        .get(
+          process.env.VUE_APP_BASE_URL +
+            process.env.VUE_APP_VERSION +
+            "/water/detail",
+          { params: { id: this.$route.params.id } }
+        )
+        .then(
+          response => {
+            if (response.data.code == 2000) {
+              this.formData.introduction = response.data.data.introduction;
+            } else {
+              this.$Message.warning(response.data.msg);
+            }
+          },
+          res => {
+            this.$Message.warning("获取数据失败，请刷新或重试。");
+          }
+        );
     }
   },
   computed: {},
-  mounted() {}
+  mounted() {
+    if (this.$route.params.id == undefined) {
+      this.$router.replace({ path: "/water" });
+    } else {
+      this.init();
+    }
+  }
 };
 </script>
 

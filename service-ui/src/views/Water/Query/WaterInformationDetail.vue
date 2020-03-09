@@ -1,7 +1,7 @@
 <template>
   <div>
     <div style="text-align: center;">
-      <h1 slot="title">主要职责</h1>
+      <h1 slot="title">{{ this.$route.params.title }}</h1>
       <p style="color: #858585; font-size:14px; margin-top: 20px" slot="title">
         <span>发布时间: {{this.data.last_modified_time}}</span>
       </p>
@@ -38,8 +38,10 @@ export default {
             setTimeout(msg, 0);
             if (response.data.code == 2000) {
               this.data = response.data.data;
-              this.imgUrl = require(process.env
-                .VUE_APP_WATERINFORMATIONIMAGE_URL + this.data.image_path);
+              if (this.data.image_path != "") {
+                this.imgUrl = require(process.env
+                  .VUE_APP_WATERINFORMATIONIMAGE_URL + this.data.image_path);
+              }
             } else {
               this.$Message.warning(response.data.msg);
             }
