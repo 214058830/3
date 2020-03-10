@@ -20,6 +20,16 @@
           style="cursor:pointer; color: #2db7f5; float: right; margin-right: 10px"
           @click="sticky(false)"
         >取消置顶</span>
+        <span
+          v-if="this.logo == 'true' && this.data.forum_article.announcement == false"
+          style="cursor:pointer; color: #2db7f5; float: right; margin-right: 10px"
+          @click="announcement(true)"
+        >设置为公告</span>
+        <span
+          v-else-if="this.logo == 'true' && this.data.forum_article.announcement != false"
+          style="cursor:pointer; color: #2db7f5; float: right; margin-right: 10px"
+          @click="announcement(false)"
+        >取消公告设置</span>
       </p>
       <article v-html="this.data.content"></article>
       <div style="margin-top: 20px">
@@ -211,6 +221,36 @@ export default {
           response => {
             if (response.data.code == 2000) {
               this.data.forum_article.logo = flag;
+            } else if (res.data.code == 2008) {
+              this.$Message.warning("请登录后再尝试操作");
+              this.$router.replace({ path: "/login" });
+            } else {
+              this.$Message.warning("操作失败，" + response.data.msg);
+            }
+          },
+          res => {
+            this.$Message.warning("获取数据失败，请刷新或重试。");
+          }
+        );
+    },
+    // 公告设置 参数: bool
+    announcement(flag) {
+      let req = {
+        article_id: this.data.forum_article.id,
+        flag: flag
+      };
+      this.axios
+        .post(
+          process.env.VUE_APP_BASE_URL +
+            process.env.VUE_APP_VERSION +
+            process.env.VUE_APP_FILTER +
+            "/forum/set_announcement",
+          req
+        )
+        .then(
+          response => {
+            if (response.data.code == 2000) {
+              this.data.forum_article.announcement = flag;
             } else if (res.data.code == 2008) {
               this.$Message.warning("请登录后再尝试操作");
               this.$router.replace({ path: "/login" });

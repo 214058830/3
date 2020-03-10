@@ -24,7 +24,9 @@
                 <Icon type="ios-notifications-outline" size="18" />
               </a>
               <DropdownMenu slot="list">
-                <DropdownItem>公告&nbsp;(3)</DropdownItem>
+                <DropdownItem name="announcement">公告</DropdownItem>
+                <DropdownItem name="like">点赞</DropdownItem>
+                <DropdownItem name="comment">评论</DropdownItem>
               </DropdownMenu>
             </Dropdown>
             <Dropdown @on-click="mail_drop">
@@ -74,6 +76,8 @@ export default {
   },
   methods: {
     logout() {
+      this.$emit("logout", "false");
+      this.$router.push({ path: "/" });
       this.axios
         .post(
           process.env.VUE_APP_BASE_URL +
@@ -81,19 +85,7 @@ export default {
             process.env.VUE_APP_FILTER +
             "/user/logout"
         )
-        .then(
-          res => {
-            if (res.data.code == 2000) {
-              this.$emit("logout", "false");
-              this.$router.push({ path: "/" });
-            } else {
-              this.$Message.warning("注销失败，请刷新或重试。");
-            }
-          },
-          res => {
-            this.$Message.warning("注销失败，请刷新或重试。");
-          }
-        );
+        .then(res => {});
     },
     updataActiveMenu(name) {
       sessionStorage.activemenu = name;
@@ -105,7 +97,13 @@ export default {
         this.logout();
       } else if (name == "my_article") {
         this.$router.push({ path: "/platform/inquire_my_article" });
-      } else {
+      } else if (name == "announcement") {
+        this.announcement();
+      } else if (name == "like") {
+        this.like();
+      } else if (name == "comment") {
+        this.comment();
+      } else if (name == "create_article") {
         this.$router.push({ path: "/platform/create_article" });
       }
     },
@@ -114,7 +112,40 @@ export default {
         sessionStorage.activemenu = "home";
         this.activemenu = sessionStorage.activemenu;
       }
-    }
+    },
+    // 公告
+    announcement() {
+      this.axios
+        .get(
+          process.env.VUE_APP_BASE_URL +
+            process.env.VUE_APP_VERSION +
+            process.env.VUE_APP_FILTER +
+            "/forum/announcement"
+        )
+        .then(
+          res => {
+            if (res.data.code == 2000) {
+              this.$router.push({
+                path: "/platform/browse",
+                query: {
+                  id: res.data.data
+                }
+              });
+            } else if (res.data.code == 2009) {
+              this.$Message.warning(res.data.msg);
+            } else {
+              this.$Message.warning(res.data.msg);
+            }
+          },
+          res => {
+            this.$Message.warning("设置失败，请刷新或重试。");
+          }
+        );
+    },
+    // 获取点赞消息
+    like() {},
+    //  获取评论提示
+    comment() {}
   },
   watch: {
     // 更新本地sessionStorage
