@@ -74,8 +74,26 @@ export default {
   },
   methods: {
     logout() {
-      this.$emit("logout", "false");
-      this.$router.push({ path: "/" });
+      this.axios
+        .post(
+          process.env.VUE_APP_BASE_URL +
+            process.env.VUE_APP_VERSION +
+            process.env.VUE_APP_FILTER +
+            "/user/logout"
+        )
+        .then(
+          res => {
+            if (res.data.code == 2000) {
+              this.$emit("logout", "false");
+              this.$router.push({ path: "/" });
+            } else {
+              this.$Message.warning("注销失败，请刷新或重试。");
+            }
+          },
+          res => {
+            this.$Message.warning("注销失败，请刷新或重试。");
+          }
+        );
     },
     updataActiveMenu(name) {
       sessionStorage.activemenu = name;
