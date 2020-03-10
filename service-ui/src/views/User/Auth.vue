@@ -113,17 +113,17 @@ export default {
             "/user"
         )
         .then(
-          response => {
+          res => {
             setTimeout(msg, 0);
-            if (response.data.code != 2000) {
-              this.$Message.warning(response.data.msg);
+            if (res.data.code == 2000) {
+              this.user = res.data.data;
+              this.initTable(1, 10, this.user.length);
+              this.updataTable(); // 请求完数据后刷新自动表格数据
             } else if (res.data.code == 2008) {
               this.$Message.warning("请登录后再尝试操作");
               this.$router.replace({ path: "/login" });
             } else {
-              this.user = response.data.data;
-              this.initTable(1, 10, this.user.length);
-              this.updataTable(); // 请求完数据后刷新自动表格数据
+              this.$Message.warning(res.data.msg);
             }
           },
           res => {
