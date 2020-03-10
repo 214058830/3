@@ -50,12 +50,7 @@ export default {
     }
   },
   mounted() {},
-  created() {
-    if (this.flag != "true") {
-      this.$emit("updataParamActiveMenu", "login");
-      this.$router.push({ path: "/login" });
-    }
-  }
+  created() {}
 };
 </script>
 

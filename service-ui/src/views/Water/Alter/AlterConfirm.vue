@@ -85,6 +85,7 @@ export default {
         process.env.VUE_APP_VERSION +
         "/water/alter",
       formData: {
+        id: 0,
         company_name: "",
         principal: "",
         telephone_number: "",
@@ -163,6 +164,7 @@ export default {
           }
           // 处理formData数据
           const map = new Map([
+            ["id", this.formData.id],
             ["company_name", this.formData.company_name],
             ["principal", this.formData.principal],
             ["telephone_number", this.formData.telephone_number],
@@ -180,17 +182,14 @@ export default {
               setTimeout(msg, 0);
               let data = res.data;
               if (data.code == 2000) {
-                this.$Message.success("提交成功");
-                this.handleReset("formData");
-              } else if (data.code == 2006) {
-                this.$Message.warning("该单位已注册");
+                this.$Message.success("保存成功");
               } else {
-                this.$Message.warning("提交失败，" + data.msg);
+                this.$Message.warning("保存失败，" + data.msg);
               }
             },
             res => {
               setTimeout(msg, 0);
-              this.$Message.warning("提交失败，请刷新或重试。");
+              this.$Message.warning("保存失败，请刷新或重试。");
             }
           );
         } else {
@@ -199,6 +198,7 @@ export default {
       });
     },
     init() {
+      this.formData.id = this.$route.params.id;
       this.formData.company_name = this.$route.params.company_name;
       this.formData.principal = this.$route.params.principal;
       this.formData.telephone_number = this.$route.params.telephone_number;
