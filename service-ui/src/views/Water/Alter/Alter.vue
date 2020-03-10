@@ -123,7 +123,10 @@ export default {
       });
       this.axios
         .get(
-          process.env.VUE_APP_BASE_URL + process.env.VUE_APP_VERSION + "/water/"
+          process.env.VUE_APP_BASE_URL +
+            process.env.VUE_APP_VERSION +
+            process.env.VUE_APP_FILTER +
+            "/water/"
         )
         .then(
           response => {
@@ -132,6 +135,9 @@ export default {
               this.water_information = response.data.data;
               this.initTable(1, 10, this.water_information.length);
               this.updataTable(); // 请求完数据后刷新自动表格数据
+            } else if (res.data.code == 2008) {
+              this.$Message.warning("请登录后再尝试操作");
+              this.$router.replace({ path: "/login" });
             } else {
               this.$Message.warning(response.data.msg);
             }

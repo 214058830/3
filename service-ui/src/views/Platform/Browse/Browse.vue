@@ -119,6 +119,7 @@ export default {
           .post(
             process.env.VUE_APP_BASE_URL +
               process.env.VUE_APP_VERSION +
+              process.env.VUE_APP_FILTER +
               "/forum/like",
             req
           )
@@ -130,6 +131,9 @@ export default {
                 } else {
                   this.data.forum_article.like_num--;
                 }
+              } else if (res.data.code == 2008) {
+                this.$Message.warning("请登录后再尝试操作");
+                this.$router.replace({ path: "/login" });
               } else {
                 this.$Message.warning("失败，" + res.data.msg);
               }
@@ -162,6 +166,7 @@ export default {
           .post(
             process.env.VUE_APP_BASE_URL +
               process.env.VUE_APP_VERSION +
+              process.env.VUE_APP_FILTER +
               "/forum/comment",
             req
           )
@@ -170,6 +175,9 @@ export default {
               if (response.data.code == 2000) {
                 this.commentText = "";
                 this.$Message.success("评论成功");
+              } else if (res.data.code == 2008) {
+                this.$Message.warning("请登录后再尝试操作");
+                this.$router.replace({ path: "/login" });
               } else {
                 this.$Message.warning("评论失败，" + response.data.msg);
               }
@@ -195,6 +203,7 @@ export default {
         .post(
           process.env.VUE_APP_BASE_URL +
             process.env.VUE_APP_VERSION +
+            process.env.VUE_APP_FILTER +
             "/forum/sticky",
           req
         )
@@ -202,6 +211,9 @@ export default {
           response => {
             if (response.data.code == 2000) {
               this.data.forum_article.logo = flag;
+            } else if (res.data.code == 2008) {
+              this.$Message.warning("请登录后再尝试操作");
+              this.$router.replace({ path: "/login" });
             } else {
               this.$Message.warning("操作失败，" + response.data.msg);
             }

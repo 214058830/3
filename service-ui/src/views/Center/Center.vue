@@ -69,6 +69,7 @@ export default {
         .post(
           process.env.VUE_APP_BASE_URL +
             process.env.VUE_APP_VERSION +
+            process.env.VUE_APP_FILTER +
             "/user/updataUserInfo",
           this.formValidate
         )
@@ -89,6 +90,9 @@ export default {
               );
             } else if (res.data.code == 5000) {
               this.$Message.success("服务器出错，请稍后重试。");
+            } else if (res.data.code == 2008) {
+              this.$Message.warning("请登录后再尝试操作");
+              this.$router.replace({ path: "/login" });
             } else {
               this.$Message.warning("保存失败，请稍后重试。");
             }

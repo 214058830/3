@@ -107,13 +107,19 @@ export default {
       });
       this.axios
         .get(
-          process.env.VUE_APP_BASE_URL + process.env.VUE_APP_VERSION + "/user"
+          process.env.VUE_APP_BASE_URL +
+            process.env.VUE_APP_VERSION +
+            process.env.VUE_APP_FILTER +
+            "/user"
         )
         .then(
           response => {
             setTimeout(msg, 0);
             if (response.data.code != 2000) {
               this.$Message.warning(response.data.msg);
+            } else if (res.data.code == 2008) {
+              this.$Message.warning("请登录后再尝试操作");
+              this.$router.replace({ path: "/login" });
             } else {
               this.user = response.data.data;
               this.initTable(1, 10, this.user.length);
@@ -216,6 +222,7 @@ export default {
         .post(
           process.env.VUE_APP_BASE_URL +
             process.env.VUE_APP_VERSION +
+            process.env.VUE_APP_FILTER +
             "/user/updataAdmin",
           request
         )
@@ -225,6 +232,9 @@ export default {
             if (res.data.code == 2000) {
               this.$Message.success("设置成功");
               this.initAllUserInfo();
+            } else if (res.data.code == 2008) {
+              this.$Message.warning("请登录后再尝试操作");
+              this.$router.replace({ path: "/login" });
             } else {
               this.$Message.warning("设置失败，" + res.data.msg);
             }

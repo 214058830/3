@@ -43,6 +43,7 @@ export default {
         .post(
           process.env.VUE_APP_BASE_URL +
             process.env.VUE_APP_VERSION +
+            process.env.VUE_APP_FILTER +
             "/forum/edit",
           req
         )
@@ -53,6 +54,9 @@ export default {
             if (data.code == 2000) {
               this.handleReset();
               this.$Message.success("发布成功");
+            } else if (res.data.code == 2008) {
+              this.$Message.warning("请登录后再尝试操作");
+              this.$router.replace({ path: "/login" });
             } else {
               this.$Message.warning("发布失败，" + data.msg);
             }
@@ -76,6 +80,7 @@ export default {
         .post(
           process.env.VUE_APP_BASE_URL +
             process.env.VUE_APP_VERSION +
+            process.env.VUE_APP_FILTER +
             "/forum/contentById",
           req
         )
@@ -85,6 +90,9 @@ export default {
             if (r.code == 2000) {
               this.article.title = r.data.forum_article.title;
               this.article.content = r.data.content;
+            } else if (res.data.code == 2008) {
+              this.$Message.warning("请登录后再尝试操作");
+              this.$router.replace({ path: "/login" });
             } else {
               this.$Message.warning("获取内容失败，" + r.msg);
             }

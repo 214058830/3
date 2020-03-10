@@ -1,5 +1,4 @@
 <template>
-  <!-- <div class="layout-content" style="margin-left: 40px"> -->
   <div>
     <Card>
       <p slot="title">录入用户信息</p>
@@ -121,6 +120,7 @@ export default {
             .post(
               process.env.VUE_APP_BASE_URL +
                 process.env.VUE_APP_VERSION +
+                process.env.VUE_APP_FILTER +
                 "/user/register",
               this.formValidate
             )
@@ -131,6 +131,9 @@ export default {
                 if (data.code == 2000) {
                   this.handleReset("formValidate");
                   this.$Message.success("录入成功");
+                } else if (res.data.code == 2008) {
+                  this.$Message.warning("请登录后再尝试操作");
+                  this.$router.replace({ path: "/login" });
                 } else {
                   this.$Message.warning("录入失败，" + data.msg);
                 }

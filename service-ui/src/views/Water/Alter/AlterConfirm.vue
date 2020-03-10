@@ -83,6 +83,7 @@ export default {
       uploadUrl:
         process.env.VUE_APP_BASE_URL +
         process.env.VUE_APP_VERSION +
+        process.env.VUE_APP_FILTER +
         "/water/alter",
       formData: {
         id: 0,
@@ -183,6 +184,9 @@ export default {
               let data = res.data;
               if (data.code == 2000) {
                 this.$Message.success("保存成功");
+              } else if (res.data.code == 2008) {
+                this.$Message.warning("请登录后再尝试操作");
+                this.$router.replace({ path: "/login" });
               } else {
                 this.$Message.warning("保存失败，" + data.msg);
               }
@@ -210,6 +214,7 @@ export default {
         .get(
           process.env.VUE_APP_BASE_URL +
             process.env.VUE_APP_VERSION +
+            process.env.VUE_APP_FILTER +
             "/water/detail",
           { params: { id: this.$route.params.id } }
         )
@@ -217,6 +222,9 @@ export default {
           response => {
             if (response.data.code == 2000) {
               this.formData.introduction = response.data.data.introduction;
+            } else if (res.data.code == 2008) {
+              this.$Message.warning("请登录后再尝试操作");
+              this.$router.replace({ path: "/login" });
             } else {
               this.$Message.warning(response.data.msg);
             }

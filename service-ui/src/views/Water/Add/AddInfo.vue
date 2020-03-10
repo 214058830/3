@@ -83,6 +83,7 @@ export default {
       uploadUrl:
         process.env.VUE_APP_BASE_URL +
         process.env.VUE_APP_VERSION +
+        process.env.VUE_APP_FILTER +
         "/water/upload",
       formData: {
         company_name: "",
@@ -184,6 +185,9 @@ export default {
                 this.handleReset("formData");
               } else if (data.code == 2006) {
                 this.$Message.warning("该单位已注册");
+              } else if (res.data.code == 2008) {
+                this.$Message.warning("请登录后再尝试操作");
+                this.$router.replace({ path: "/login" });
               } else {
                 this.$Message.warning("提交失败，" + data.msg);
               }
