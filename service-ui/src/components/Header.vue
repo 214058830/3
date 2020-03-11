@@ -21,12 +21,27 @@
           <div class="layout-center" v-if="this.flag === 'true'">
             <Dropdown style="margin-right: 20px" @on-click="mail_drop">
               <a href="javascript:void(0)">
-                <Icon type="ios-notifications-outline" size="18" />
+                <Badge
+                  dot
+                  :offset="badgeOffset"
+                  v-if="this.message.like_num > 0 || this.message.comment_num > 0"
+                >
+                  <Icon type="ios-notifications-outline" size="18"></Icon>
+                </Badge>
+                <Icon type="ios-notifications-outline" size="18" v-else />
               </a>
               <DropdownMenu slot="list">
                 <DropdownItem name="announcement">公告</DropdownItem>
-                <DropdownItem name="like">点赞</DropdownItem>
-                <DropdownItem name="comment">评论</DropdownItem>
+                <DropdownItem
+                  name="like"
+                  v-if="this.message.like_num > 0"
+                >点赞&nbsp; {{ this.message.like_num }}</DropdownItem>
+                <DropdownItem name="like" v-else>点赞</DropdownItem>
+                <DropdownItem
+                  name="comment"
+                  v-if="this.message.comment_num > 0"
+                >评论&nbsp; {{ this.message.comment_num }}</DropdownItem>
+                <DropdownItem name="comment" v-else>评论</DropdownItem>
               </DropdownMenu>
             </Dropdown>
             <Dropdown @on-click="mail_drop">
@@ -70,8 +85,13 @@ export default {
   },
   data() {
     return {
+      badgeOffset: [30, 0], // 徽标小红点的坐标偏移值
       activemenu: sessionStorage.activemenu, // 默认激活子菜单
-      theme: "light" // 导航栏主题色彩
+      theme: "light", // 导航栏主题色彩
+      message: {
+        like_num: 0,
+        comment_num: 0
+      }
     };
   },
   methods: {
@@ -100,9 +120,9 @@ export default {
       } else if (name == "announcement") {
         this.announcement();
       } else if (name == "like") {
-        this.like();
+        this.getMessage("like");
       } else if (name == "comment") {
-        this.comment();
+        this.getMessage("comment");
       } else if (name == "create_article") {
         this.$router.push({ path: "/platform/create_article" });
       }
@@ -142,15 +162,47 @@ export default {
           }
         );
     },
-    // 获取点赞消息
-    like() {},
-    //  获取评论提示
-    comment() {}
+    getMessageNum() {
+      this.axios
+        .get(
+          process.env.VUE_APP_BASE_URL +
+            process.env.VUE_APP_VERSION +
+            process.env.VUE_APP_FILTER +
+            "/message/number",
+          { params: { mail: this.mail } }
+        )
+        .then(
+          res => {
+            if (res.data.code == 2000) {
+              this.message = res.data.data;
+            } else {
+              this.$Message.warning("消息通知获取失败，请稍后重试。");
+            }
+          },
+          res => {
+            this.$Message.warning("消息通知获取失败，请刷新或重试。");
+          }
+        );
+    },
+    // 获取消息
+    getMessage(val) {
+      this.$router.replace({
+        name: "Message",
+        params: {
+          msg: val
+        }
+      });
+    }
   },
   watch: {
     // 更新本地sessionStorage
     paramActiveMenu: function(val) {
       sessionStorage.activemenu = val;
+    },
+    logo: function(val) {
+      if (val == "true") {
+        this.getMessageNum();
+      }
     }
   },
   computed: {},

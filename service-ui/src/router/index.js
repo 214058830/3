@@ -21,6 +21,7 @@ import EditArticle from '../views/Platform/Edit/EditArticle.vue'
 import PlatformIndex from '../views/Platform/Index/Index.vue'
 import Browse from '../views/Platform/Browse/Browse.vue'
 import InquireMyArticle from '../views/Platform/Browse/InquireMyArticle.vue'
+import Message from '../views/Message/Message.vue'
 
 Vue.use(VueRouter)
 
@@ -135,6 +136,11 @@ const routes = [
         path: '/center',
         name: 'center',
         component: Center
+      },
+      {
+        path: 'message',
+        name: 'Message',
+        component: Message
       }
     ]
   },
