@@ -207,6 +207,7 @@ export default {
   },
   computed: {},
   mounted() {
+    if (this.logo == "true") this.getMessageNum();
     this.init();
   }
 };
