@@ -86,7 +86,7 @@ export default {
         content: "",
         comment: []
       },
-      likeflag: 0 // 点赞标志
+      likeflag: true // 点赞标志
     };
   },
   methods: {
@@ -123,7 +123,8 @@ export default {
       } else {
         let req = {
           article_id: this.data.forum_article.id,
-          like_user_mail: this.mail
+          like_user_mail: this.mail,
+          flag: this.likeflag
         };
         this.axios
           .post(
@@ -136,11 +137,12 @@ export default {
           .then(
             res => {
               if (res.data.code == 2000) {
-                if (res.data.data == true) {
+                if (this.likeflag) {
                   this.data.forum_article.like_num++;
                 } else {
                   this.data.forum_article.like_num--;
                 }
+                this.likeflag = !this.likeflag;
               } else if (res.data.code == 2008) {
                 this.$Message.warning("请登录后再尝试操作");
                 this.$router.replace({ path: "/login" });
@@ -262,10 +264,38 @@ export default {
             this.$Message.warning("获取数据失败，请刷新或重试。");
           }
         );
+    },
+    // 查询点赞状态
+    selectLikeFlag() {
+      this.axios
+        .get(
+          process.env.VUE_APP_BASE_URL +
+            process.env.VUE_APP_VERSION +
+            "/forum/like_flag",
+          {
+            params: {
+              article_id: this.$route.query.id,
+              like_user_mail: this.mail
+            }
+          }
+        )
+        .then(
+          response => {
+            if (response.data.code == 2000) {
+              this.likeflag = !response.data.data;
+            } else {
+              this.$Message.warning(response.data.msg);
+            }
+          },
+          res => {
+            this.$Message.warning("获取数据失败，请刷新或重试。");
+          }
+        );
     }
   },
   mounted() {
     this.init();
+    this.selectLikeFlag();
   }
 };
 </script>
