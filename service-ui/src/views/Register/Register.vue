@@ -69,7 +69,7 @@
         <br />
         <Card>
           <p slot="title">已经有账号了？</p>
-          <li style="cursor:pointer" to="/register">登录</li>
+          <li style="cursor:pointer" @click="login()">登录</li>
           <li style="cursor:pointer">忘记了密码？</li>
         </Card>
       </Col>
@@ -201,6 +201,9 @@ export default {
     },
     getVerificationCode() {
       this.formValidate.verification_code = "1234";
+    },
+    login() {
+      this.$router.push({ path: "/login" });
     }
   }
 };

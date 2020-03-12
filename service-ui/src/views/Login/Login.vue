@@ -40,7 +40,7 @@
         <br />
         <Card>
           <p slot="title">还没有账号？</p>
-          <li style="cursor:pointer" to="/register">注册</li>
+          <li style="cursor:pointer" @click="register()">注册</li>
           <li style="cursor:pointer">忘记了密码？</li>
         </Card>
       </Col>
@@ -138,6 +138,9 @@ export default {
             this.formValidate.single = data.data.Single;
           }
         });
+    },
+    register() {
+      this.$router.push({ path: "/register" });
     }
   },
   mounted() {
